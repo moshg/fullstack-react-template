@@ -42,6 +42,16 @@ Create a production build:
 npm run build
 ```
 
+## Database Schema Changes
+
+When you modify your database schema, you need to push the changes to your database:
+
+```bash
+pnpm drizzle-kit push
+```
+
+This command will update your database schema according to the changes you've made in your Drizzle ORM schema definitions.
+
 ## Deployment
 
 ### Docker Deployment
