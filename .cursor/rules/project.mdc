@@ -1,0 +1,31 @@
+---
+description: Project Structure and Coding Conventions
+globs: 
+alwaysApply: true
+---
+# Project Structure
+## Technology Stack
+- Runtime: Node.js
+- Package Manager: pnpm
+- Framework: React Router
+- Components: shadcn/ui
+- ORM: Drizzle ORM
+- Forms: conform
+
+# Library Notes
+## React Router
+This project uses React Router v7.
+React Router v7 provides roughly the same functionality as Remix.
+The module name is "react-router".
+
+## shadcn/ui
+When using components, always check if the required component exists in app/components.
+If it doesn't exist, run `pnpx shadcn@latest add <component_name>` to add the component beforehand.
+Do not use shadcn/ui's `Form` component. `Form` depends on react-hook-form, but we use conform as our form library.
+
+## Drizzle ORM
+The connection is in [drizzle.ts](mdc:app/config/drizzle.ts).
+Schema information is in [schema.ts](mdc:app/db/schema.ts).
+
+# Coding Conventions
+- Use absolute imports except when accessing sibling directories. Absolute imports should be in the format `import { item } from "~/path/to/module"`.
