@@ -1,7 +1,9 @@
 import { Link, redirect, useLoaderData } from "react-router";
 import { Button } from "~/components/ui/button";
+import { Checkbox } from "~/components/ui/checkbox";
+import { Label } from "~/components/ui/label";
 import { db } from "~/config/drizzle";
-import { booksTable, categoriesTable } from "~/db/schema";
+import { bookCategoriesTable, booksTable, categoriesTable } from "~/db/schema";
 
 export async function loader() {
 	try {
@@ -19,7 +21,9 @@ export async function action({ request }: { request: Request }) {
 		const title = formData.get("title") as string;
 		const author = formData.get("author") as string;
 		const publishYearStr = formData.get("publishYear") as string;
-		const categoryId = formData.get("categoryId") as string;
+
+		// Get all selected category IDs
+		const categoryIds = formData.getAll("categoryIds") as string[];
 
 		// Validate required fields
 		const errors: Record<string, string> = {};
@@ -34,7 +38,7 @@ export async function action({ request }: { request: Request }) {
 					title,
 					author,
 					publishYear: publishYearStr,
-					categoryId,
+					categoryIds,
 				},
 			};
 		}
@@ -45,14 +49,26 @@ export async function action({ request }: { request: Request }) {
 			: undefined;
 
 		// Insert the new book
-		await db.insert(booksTable).values({
-			title,
-			author,
-			publishYear: Number.isNaN(publishYear as number)
-				? undefined
-				: publishYear,
-			categoryId: categoryId ? Number.parseInt(categoryId, 10) : undefined,
-		});
+		const [newBook] = await db
+			.insert(booksTable)
+			.values({
+				title,
+				author,
+				publishYear: Number.isNaN(publishYear as number)
+					? undefined
+					: publishYear,
+			})
+			.returning({ id: booksTable.id });
+
+		// Insert book-category relationships
+		if (categoryIds.length > 0) {
+			const bookCategoryValues = categoryIds.map((categoryId) => ({
+				bookId: newBook.id,
+				categoryId: Number.parseInt(categoryId, 10),
+			}));
+
+			await db.insert(bookCategoriesTable).values(bookCategoryValues);
+		}
 
 		// Redirect to the books list page
 		return redirect("/books");
@@ -123,24 +139,22 @@ export default function NewBook() {
 					</div>
 
 					<div>
-						<label
-							htmlFor="categoryId"
-							className="block text-sm font-medium mb-1"
-						>
-							Category
-						</label>
-						<select
-							id="categoryId"
-							name="categoryId"
-							className="w-full p-2 border rounded-md"
-						>
-							<option value="">Select a category</option>
+						{/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
+						<label className="block text-sm font-medium mb-2">Categories</label>
+						<div className="space-y-2">
 							{categories.map((category) => (
-								<option key={category.id} value={category.id}>
-									{category.name}
-								</option>
+								<div key={category.id} className="flex items-center space-x-2">
+									<Checkbox
+										id={`category-${category.id}`}
+										name="categoryIds"
+										value={category.id.toString()}
+									/>
+									<Label htmlFor={`category-${category.id}`}>
+										{category.name}
+									</Label>
+								</div>
 							))}
-						</select>
+						</div>
 					</div>
 
 					<div className="flex justify-end pt-4">

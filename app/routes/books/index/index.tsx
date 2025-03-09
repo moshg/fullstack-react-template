@@ -1,4 +1,5 @@
 import { Link, useLoaderData } from "react-router";
+import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import {
 	Table,
@@ -33,7 +34,7 @@ export default function Books() {
 						<TableHead>Title</TableHead>
 						<TableHead>Author</TableHead>
 						<TableHead>Publication Year</TableHead>
-						<TableHead>Category</TableHead>
+						<TableHead>Categories</TableHead>
 					</TableRow>
 				</TableHeader>
 				<TableBody>
@@ -50,7 +51,19 @@ export default function Books() {
 								<TableCell className="font-medium">{book.title}</TableCell>
 								<TableCell>{book.author}</TableCell>
 								<TableCell>{book.publishYear || "Unknown"}</TableCell>
-								<TableCell>{book.categoryName || "Uncategorized"}</TableCell>
+								<TableCell>
+									{book.categories.length === 0 ? (
+										<span className="text-gray-500">Uncategorized</span>
+									) : (
+										<div className="flex flex-wrap gap-1">
+											{book.categories.map((category) => (
+												<Badge key={category.id} variant="outline">
+													{category.name}
+												</Badge>
+											))}
+										</div>
+									)}
+								</TableCell>
 							</TableRow>
 						))
 					)}

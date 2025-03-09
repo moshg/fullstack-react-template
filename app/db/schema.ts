@@ -11,5 +11,15 @@ export const booksTable = sqliteTable("books", {
 	title: text().notNull(),
 	author: text().notNull(),
 	publishYear: int(),
-	categoryId: int().references(() => categoriesTable.id),
+});
+
+// 本とカテゴリの多対多関係のための中間テーブル
+export const bookCategoriesTable = sqliteTable("book_categories", {
+	id: int().primaryKey({ autoIncrement: true }),
+	bookId: int()
+		.notNull()
+		.references(() => booksTable.id),
+	categoryId: int()
+		.notNull()
+		.references(() => categoriesTable.id),
 });
