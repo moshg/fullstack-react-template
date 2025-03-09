@@ -1,8 +1,10 @@
+import { parseWithZod } from "@conform-to/zod";
 import { redirect, useFetcher } from "react-router";
 import { getCategories } from "~/routes/categories/index/api/get-categories";
 import type { Route } from "./+types";
 import { createBook } from "./api/create-book";
 import NewBook from "./components/new-book";
+import { bookCreateSchema } from "./types/book-create-model";
 
 export async function loader() {
 	try {
@@ -17,43 +19,17 @@ export async function loader() {
 export async function action({ request }: { request: Request }) {
 	try {
 		const formData = await request.formData();
-		const title = formData.get("title") as string;
-		const author = formData.get("author") as string;
-		const publishYearStr = formData.get("publishYear") as string;
+		const submission = parseWithZod(formData, {
+			schema: bookCreateSchema,
+		});
 
-		// Get all selected category IDs
-		const categoryIds = formData.getAll("categoryIds") as string[];
-
-		// Validate required fields
-		const errors: Record<string, string> = {};
-		if (!title) errors.title = "Title is required";
-		if (!author) errors.author = "Author is required";
-
-		// If there are validation errors, return them
-		if (Object.keys(errors).length > 0) {
-			return {
-				errors,
-				values: {
-					title,
-					author,
-					publishYear: publishYearStr,
-					categoryIds,
-				},
-			};
+		// Return early if there are validation errors
+		if (submission.status !== "success") {
+			return submission.reply();
 		}
 
-		// Convert publishYear to number if provided
-		const publishYear = publishYearStr
-			? Number.parseInt(publishYearStr, 10)
-			: undefined;
-
 		// Insert the new book
-		await createBook({
-			title,
-			author,
-			publishYear,
-			categoryIds: categoryIds.map((id) => Number(id)),
-		});
+		await createBook(submission.value);
 
 		// Redirect to the books list page
 		return redirect("/books");

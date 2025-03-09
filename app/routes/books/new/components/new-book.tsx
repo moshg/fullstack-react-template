@@ -1,9 +1,12 @@
+import { getFormProps, getInputProps, useForm } from "@conform-to/react";
+import { parseWithZod } from "@conform-to/zod";
 import { RefreshCw } from "lucide-react";
-import { type FetcherWithComponents, Link } from "react-router";
+import { type FetcherWithComponents, Link, useActionData } from "react-router";
 import { Button } from "~/components/ui/button";
 import { Checkbox } from "~/components/ui/checkbox";
 import { Label } from "~/components/ui/label";
 import type { CategoryModel } from "~/routes/categories/index/types/category-model";
+import { bookCreateSchema } from "../types/book-create-model";
 
 export default function NewBook({
 	categories,
@@ -14,6 +17,15 @@ export default function NewBook({
 		categories: CategoryModel[];
 	}>;
 }) {
+	const lastResult = useActionData();
+	const [form, fields] = useForm({
+		lastResult,
+		onValidate({ formData }) {
+			return parseWithZod(formData, { schema: bookCreateSchema });
+		},
+		shouldRevalidate: "onBlur",
+	});
+
 	// Function to refresh the categories list
 	const refreshCategories = () => {
 		categoriesFetcher.load("/books/new");
@@ -32,54 +44,70 @@ export default function NewBook({
 			</div>
 
 			<div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-sm">
-				<form method="post" className="space-y-4">
+				<form method="post" className="space-y-4" {...getFormProps(form)}>
+					{form.errors && (
+						<div className="text-red-500 text-sm">{form.errors}</div>
+					)}
+
 					<div>
-						<label htmlFor="title" className="block text-sm font-medium mb-1">
+						<label
+							htmlFor={fields.title.id}
+							className="block text-sm font-medium mb-1"
+						>
 							Title
 						</label>
 						<input
-							type="text"
-							id="title"
-							name="title"
+							{...getInputProps(fields.title, { type: "text" })}
 							className="w-full p-2 border rounded-md"
-							required
 						/>
-					</div>
-
-					<div>
-						<label htmlFor="author" className="block text-sm font-medium mb-1">
-							Author
-						</label>
-						<input
-							type="text"
-							id="author"
-							name="author"
-							className="w-full p-2 border rounded-md"
-							required
-						/>
+						{fields.title.errors && (
+							<div className="text-red-500 text-sm mt-1">
+								{fields.title.errors}
+							</div>
+						)}
 					</div>
 
 					<div>
 						<label
-							htmlFor="publishYear"
+							htmlFor={fields.author.id}
+							className="block text-sm font-medium mb-1"
+						>
+							Author
+						</label>
+						<input
+							{...getInputProps(fields.author, { type: "text" })}
+							className="w-full p-2 border rounded-md"
+						/>
+						{fields.author.errors && (
+							<div className="text-red-500 text-sm mt-1">
+								{fields.author.errors}
+							</div>
+						)}
+					</div>
+
+					<div>
+						<label
+							htmlFor={fields.publishYear.id}
 							className="block text-sm font-medium mb-1"
 						>
 							Publication Year
 						</label>
 						<input
-							type="number"
-							id="publishYear"
-							name="publishYear"
+							{...getInputProps(fields.publishYear, { type: "number" })}
 							className="w-full p-2 border rounded-md"
 							min="1000"
 							max={new Date().getFullYear()}
 						/>
+						{fields.publishYear.errors && (
+							<div className="text-red-500 text-sm mt-1">
+								{fields.publishYear.errors}
+							</div>
+						)}
 					</div>
 
 					<div>
 						<div className="flex justify-between items-center mb-2">
-							{/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
-							<label className="block text-sm font-medium">Categories</label>
+							<span className="block text-sm font-medium">Categories</span>
 							<Button
 								type="button"
 								variant="ghost"
@@ -109,6 +137,11 @@ export default function NewBook({
 							))}
 							{displayCategories.length === 0 && (
 								<p className="text-sm text-gray-500">No categories available</p>
+							)}
+							{fields.categoryIds?.errors && (
+								<div className="text-red-500 text-sm mt-1">
+									{fields.categoryIds.errors}
+								</div>
 							)}
 						</div>
 					</div>
