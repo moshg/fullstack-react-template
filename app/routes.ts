@@ -10,11 +10,11 @@ export default [
 		index("routes/index.tsx"),
 		...prefix("books", [
 			index("routes/books/index/index.tsx"),
-			{ path: "new", file: "routes/books/new.tsx" },
+			{ path: "new", file: "routes/books/new/index.tsx" },
 		]),
 		...prefix("categories", [
 			index("routes/categories/index/index.tsx"),
-			{ path: "new", file: "routes/categories/new.tsx" },
+			{ path: "new", file: "routes/categories/new/index.tsx" },
 		]),
 	]),
 ] satisfies RouteConfig;

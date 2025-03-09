@@ -1,99 +1,26 @@
 import { RefreshCw } from "lucide-react";
-import { Link, redirect, useFetcher } from "react-router";
+import { type FetcherWithComponents, Link } from "react-router";
 import { Button } from "~/components/ui/button";
 import { Checkbox } from "~/components/ui/checkbox";
 import { Label } from "~/components/ui/label";
-import { db } from "~/config/drizzle";
-import { bookCategoriesTable, booksTable, categoriesTable } from "~/db/schema";
-import type { Route } from "./+types/new";
+import type { CategoryModel } from "~/routes/categories/index/types/category-model";
 
-export async function loader() {
-	try {
-		const categories = await db.select().from(categoriesTable);
-		return { categories };
-	} catch (error) {
-		console.error("Failed to fetch categories:", error);
-		return { categories: [] };
-	}
-}
-
-export async function action({ request }: { request: Request }) {
-	try {
-		const formData = await request.formData();
-		const title = formData.get("title") as string;
-		const author = formData.get("author") as string;
-		const publishYearStr = formData.get("publishYear") as string;
-
-		// Get all selected category IDs
-		const categoryIds = formData.getAll("categoryIds") as string[];
-
-		// Validate required fields
-		const errors: Record<string, string> = {};
-		if (!title) errors.title = "Title is required";
-		if (!author) errors.author = "Author is required";
-
-		// If there are validation errors, return them
-		if (Object.keys(errors).length > 0) {
-			return {
-				errors,
-				values: {
-					title,
-					author,
-					publishYear: publishYearStr,
-					categoryIds,
-				},
-			};
-		}
-
-		// Convert publishYear to number if provided
-		const publishYear = publishYearStr
-			? Number.parseInt(publishYearStr, 10)
-			: undefined;
-
-		// Insert the new book
-		const [newBook] = await db
-			.insert(booksTable)
-			.values({
-				title,
-				author,
-				publishYear: Number.isNaN(publishYear as number)
-					? undefined
-					: publishYear,
-			})
-			.returning({ id: booksTable.id });
-
-		// Insert book-category relationships
-		if (categoryIds.length > 0) {
-			const bookCategoryValues = categoryIds.map((categoryId) => ({
-				bookId: newBook.id,
-				categoryId: Number.parseInt(categoryId, 10),
-			}));
-
-			await db.insert(bookCategoriesTable).values(bookCategoryValues);
-		}
-
-		// Redirect to the books list page
-		return redirect("/books");
-	} catch (error) {
-		console.error("Failed to create book:", error);
-		return {
-			errors: { form: "Failed to create book. Please try again." },
-			values: request.formData,
-		};
-	}
-}
-
-export default function NewBook({ loaderData }: Route.ComponentProps) {
-	const { categories } = loaderData;
-	const categoryFetcher = useFetcher<typeof loader>();
-
+export default function NewBook({
+	categories,
+	categoriesFetcher,
+}: {
+	categories: CategoryModel[];
+	categoriesFetcher: FetcherWithComponents<{
+		categories: CategoryModel[];
+	}>;
+}) {
 	// Function to refresh the categories list
 	const refreshCategories = () => {
-		categoryFetcher.load("/books/new");
+		categoriesFetcher.load("/books/new");
 	};
 
 	// Use updated categories if available
-	const displayCategories = categoryFetcher.data?.categories || categories;
+	const displayCategories = categoriesFetcher.data?.categories || categories;
 
 	return (
 		<div className="container mx-auto py-8">
@@ -158,12 +85,12 @@ export default function NewBook({ loaderData }: Route.ComponentProps) {
 								variant="ghost"
 								size="icon"
 								onClick={refreshCategories}
-								disabled={categoryFetcher.state === "loading"}
+								disabled={categoriesFetcher.state === "loading"}
 								title="Refresh Categories"
 								className="h-8 w-8"
 							>
 								<RefreshCw
-									className={`h-4 w-4 ${categoryFetcher.state === "loading" ? "animate-spin" : ""}`}
+									className={`h-4 w-4 ${categoriesFetcher.state === "loading" ? "animate-spin" : ""}`}
 								/>
 							</Button>
 						</div>

@@ -1,47 +1,7 @@
-import { Link, redirect } from "react-router";
+import { Link } from "react-router";
 import { Button } from "~/components/ui/button";
-import { db } from "~/config/drizzle";
-import { categoriesTable } from "~/db/schema";
 
-export async function action({ request }: { request: Request }) {
-	try {
-		const formData = await request.formData();
-		const name = formData.get("name") as string;
-		const description = formData.get("description") as string;
-
-		// Validate required fields
-		const errors: Record<string, string> = {};
-		if (!name) errors.name = "Name is required";
-
-		// If there are validation errors, return them
-		if (Object.keys(errors).length > 0) {
-			return {
-				errors,
-				values: {
-					name,
-					description,
-				},
-			};
-		}
-
-		// Insert the new category
-		await db.insert(categoriesTable).values({
-			name,
-			description: description || undefined,
-		});
-
-		// Redirect to the categories list page
-		return redirect("/categories");
-	} catch (error) {
-		console.error("Failed to create category:", error);
-		return {
-			errors: { form: "Failed to create category. Please try again." },
-			values: request.formData,
-		};
-	}
-}
-
-export default function NewCategory() {
+export function NewCategory() {
 	return (
 		<div className="container mx-auto py-8">
 			<div className="flex justify-between items-center mb-6">

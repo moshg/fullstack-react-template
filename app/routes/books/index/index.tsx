@@ -1,74 +1,21 @@
-import { Link } from "react-router";
-import { Badge } from "~/components/ui/badge";
-import { Button } from "~/components/ui/button";
-import {
-	Table,
-	TableBody,
-	TableCaption,
-	TableCell,
-	TableHead,
-	TableHeader,
-	TableRow,
-} from "~/components/ui/table";
 import type { Route } from "./+types";
+import { getBooks } from "./api/getBooks";
+import Books from "./components/books";
 
-export { loader } from "./loader";
+export async function loader() {
+	try {
+		// Fetch all books
+		const books = await getBooks();
 
-export default function Books({ loaderData }: Route.ComponentProps) {
+		return { books };
+	} catch (error) {
+		console.error("Failed to fetch books:", error);
+		return { books: [] };
+	}
+}
+
+export default function Component({ loaderData }: Route.ComponentProps) {
 	const { books } = loaderData;
 
-	return (
-		<div className="container mx-auto py-8">
-			<div className="flex justify-between items-center mb-6">
-				<h1 className="text-2xl font-bold">Book List</h1>
-				<Link to="/books/new">
-					<Button>Add Book</Button>
-				</Link>
-			</div>
-
-			<Table>
-				<TableCaption>All available books</TableCaption>
-				<TableHeader>
-					<TableRow>
-						<TableHead>ID</TableHead>
-						<TableHead>Title</TableHead>
-						<TableHead>Author</TableHead>
-						<TableHead>Publication Year</TableHead>
-						<TableHead>Categories</TableHead>
-					</TableRow>
-				</TableHeader>
-				<TableBody>
-					{books.length === 0 ? (
-						<TableRow>
-							<TableCell colSpan={5} className="text-center">
-								No books found
-							</TableCell>
-						</TableRow>
-					) : (
-						books.map((book) => (
-							<TableRow key={book.id}>
-								<TableCell>{book.id}</TableCell>
-								<TableCell className="font-medium">{book.title}</TableCell>
-								<TableCell>{book.author}</TableCell>
-								<TableCell>{book.publishYear || "Unknown"}</TableCell>
-								<TableCell>
-									{book.categories.length === 0 ? (
-										<span className="text-gray-500">Uncategorized</span>
-									) : (
-										<div className="flex flex-wrap gap-1">
-											{book.categories.map((category) => (
-												<Badge key={category.id} variant="outline">
-													{category.name}
-												</Badge>
-											))}
-										</div>
-									)}
-								</TableCell>
-							</TableRow>
-						))
-					)}
-				</TableBody>
-			</Table>
-		</div>
-	);
+	return <Books books={books} />;
 }
