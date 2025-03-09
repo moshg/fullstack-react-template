@@ -1,7 +1,17 @@
-import { Link, redirect } from "react-router";
+import { Link, redirect, useLoaderData } from "react-router";
 import { Button } from "~/components/ui/button";
 import { db } from "~/config/drizzle";
-import { booksTable } from "~/db/schema";
+import { booksTable, categoriesTable } from "~/db/schema";
+
+export async function loader() {
+	try {
+		const categories = await db.select().from(categoriesTable);
+		return { categories };
+	} catch (error) {
+		console.error("Failed to fetch categories:", error);
+		return { categories: [] };
+	}
+}
 
 export async function action({ request }: { request: Request }) {
 	try {
@@ -9,6 +19,7 @@ export async function action({ request }: { request: Request }) {
 		const title = formData.get("title") as string;
 		const author = formData.get("author") as string;
 		const publishYearStr = formData.get("publishYear") as string;
+		const categoryId = formData.get("categoryId") as string;
 
 		// Validate required fields
 		const errors: Record<string, string> = {};
@@ -17,7 +28,15 @@ export async function action({ request }: { request: Request }) {
 
 		// If there are validation errors, return them
 		if (Object.keys(errors).length > 0) {
-			return { errors, values: { title, author, publishYear: publishYearStr } };
+			return {
+				errors,
+				values: {
+					title,
+					author,
+					publishYear: publishYearStr,
+					categoryId,
+				},
+			};
 		}
 
 		// Convert publishYear to number if provided
@@ -32,6 +51,7 @@ export async function action({ request }: { request: Request }) {
 			publishYear: Number.isNaN(publishYear as number)
 				? undefined
 				: publishYear,
+			categoryId: categoryId ? Number.parseInt(categoryId, 10) : undefined,
 		});
 
 		// Redirect to the books list page
@@ -46,6 +66,8 @@ export async function action({ request }: { request: Request }) {
 }
 
 export default function NewBook() {
+	const { categories } = useLoaderData<typeof loader>();
+
 	return (
 		<div className="container mx-auto py-8">
 			<div className="flex justify-between items-center mb-6">
@@ -98,6 +120,27 @@ export default function NewBook() {
 							min="1000"
 							max={new Date().getFullYear()}
 						/>
+					</div>
+
+					<div>
+						<label
+							htmlFor="categoryId"
+							className="block text-sm font-medium mb-1"
+						>
+							Category
+						</label>
+						<select
+							id="categoryId"
+							name="categoryId"
+							className="w-full p-2 border rounded-md"
+						>
+							<option value="">Select a category</option>
+							{categories.map((category) => (
+								<option key={category.id} value={category.id}>
+									{category.name}
+								</option>
+							))}
+						</select>
 					</div>
 
 					<div className="flex justify-end pt-4">

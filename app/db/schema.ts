@@ -11,4 +11,5 @@ export const booksTable = sqliteTable("books", {
 	title: text().notNull(),
 	author: text().notNull(),
 	publishYear: int(),
+	categoryId: int().references(() => categoriesTable.id),
 });

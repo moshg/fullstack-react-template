@@ -33,12 +33,13 @@ export default function Books() {
 						<TableHead>Title</TableHead>
 						<TableHead>Author</TableHead>
 						<TableHead>Publication Year</TableHead>
+						<TableHead>Category</TableHead>
 					</TableRow>
 				</TableHeader>
 				<TableBody>
 					{books.length === 0 ? (
 						<TableRow>
-							<TableCell colSpan={4} className="text-center">
+							<TableCell colSpan={5} className="text-center">
 								No books found
 							</TableCell>
 						</TableRow>
@@ -49,6 +50,7 @@ export default function Books() {
 								<TableCell className="font-medium">{book.title}</TableCell>
 								<TableCell>{book.author}</TableCell>
 								<TableCell>{book.publishYear || "Unknown"}</TableCell>
+								<TableCell>{book.categoryName || "Uncategorized"}</TableCell>
 							</TableRow>
 						))
 					)}
