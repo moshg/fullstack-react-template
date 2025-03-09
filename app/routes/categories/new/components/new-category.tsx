@@ -1,7 +1,24 @@
-import { Link } from "react-router";
+import {
+	getFormProps,
+	getInputProps,
+	getTextareaProps,
+	useForm,
+} from "@conform-to/react";
+import { parseWithZod } from "@conform-to/zod";
+import { Link, useActionData } from "react-router";
 import { Button } from "~/components/ui/button";
+import { categoryCreateSchema } from "../types/category-create-model";
 
 export function NewCategory() {
+	const lastResult = useActionData();
+	const [form, fields] = useForm({
+		lastResult,
+		onValidate({ formData }) {
+			return parseWithZod(formData, { schema: categoryCreateSchema });
+		},
+		shouldRevalidate: "onBlur",
+	});
+
 	return (
 		<div className="container mx-auto py-8">
 			<div className="flex justify-between items-center mb-6">
@@ -12,33 +29,42 @@ export function NewCategory() {
 			</div>
 
 			<div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-sm">
-				<form method="post" className="space-y-4">
+				<form method="post" className="space-y-4" {...getFormProps(form)}>
 					<div>
-						<label htmlFor="name" className="block text-sm font-medium mb-1">
+						<label
+							htmlFor={fields.name.id}
+							className="block text-sm font-medium mb-1"
+						>
 							Name
 						</label>
 						<input
-							type="text"
-							id="name"
-							name="name"
+							{...getInputProps(fields.name, { type: "text" })}
 							className="w-full p-2 border rounded-md"
-							required
 						/>
+						{fields.name.errors && (
+							<div className="text-red-500 text-sm mt-1">
+								{fields.name.errors}
+							</div>
+						)}
 					</div>
 
 					<div>
 						<label
-							htmlFor="description"
+							htmlFor={fields.description.id}
 							className="block text-sm font-medium mb-1"
 						>
 							Description
 						</label>
 						<textarea
-							id="description"
-							name="description"
+							{...getTextareaProps(fields.description)}
 							className="w-full p-2 border rounded-md"
 							rows={4}
 						/>
+						{fields.description.errors && (
+							<div className="text-red-500 text-sm mt-1">
+								{fields.description.errors}
+							</div>
+						)}
 					</div>
 
 					<div className="flex justify-end pt-4">
