@@ -6,4 +6,8 @@ export default [
 		path: "books",
 		file: "routes/books/books/index.tsx",
 	},
+	{
+		path: "books/new",
+		file: "routes/books/new.tsx",
+	},
 ] satisfies RouteConfig;

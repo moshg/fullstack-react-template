@@ -1,4 +1,5 @@
-import { useLoaderData } from "react-router";
+import { Link, useLoaderData } from "react-router";
+import { Button } from "~/components/ui/button";
 import {
 	Table,
 	TableBody,
@@ -18,7 +19,12 @@ export default function Books() {
 
 	return (
 		<div className="container mx-auto py-8">
-			<h1 className="text-2xl font-bold mb-6">Book List</h1>
+			<div className="flex justify-between items-center mb-6">
+				<h1 className="text-2xl font-bold">Book List</h1>
+				<Link to="/books/new">
+					<Button>Add Book</Button>
+				</Link>
+			</div>
 
 			<Table>
 				<TableCaption>All available books</TableCaption>
