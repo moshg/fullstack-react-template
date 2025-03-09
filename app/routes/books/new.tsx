@@ -1,9 +1,10 @@
-import { Link, redirect, useLoaderData } from "react-router";
+import { Link, redirect } from "react-router";
 import { Button } from "~/components/ui/button";
 import { Checkbox } from "~/components/ui/checkbox";
 import { Label } from "~/components/ui/label";
 import { db } from "~/config/drizzle";
 import { bookCategoriesTable, booksTable, categoriesTable } from "~/db/schema";
+import type { Route } from "./+types/new";
 
 export async function loader() {
 	try {
@@ -81,8 +82,8 @@ export async function action({ request }: { request: Request }) {
 	}
 }
 
-export default function NewBook() {
-	const { categories } = useLoaderData<typeof loader>();
+export default function NewBook({ loaderData }: Route.ComponentProps) {
+	const { categories } = loaderData;
 
 	return (
 		<div className="container mx-auto py-8">

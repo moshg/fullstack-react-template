@@ -1,4 +1,4 @@
-import { Link, useLoaderData } from "react-router";
+import { Link } from "react-router";
 import { Button } from "~/components/ui/button";
 import {
 	Table,
@@ -9,12 +9,12 @@ import {
 	TableHeader,
 	TableRow,
 } from "~/components/ui/table";
-import type { loader } from "./loader";
+import type { Route } from "./+types";
 
 export { loader } from "./loader";
 
-export default function Categories() {
-	const { categories } = useLoaderData<typeof loader>();
+export default function Categories({ loaderData }: Route.ComponentProps) {
+	const { categories } = loaderData;
 
 	return (
 		<div className="container mx-auto py-8">

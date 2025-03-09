@@ -1,4 +1,4 @@
-import { Link, useLoaderData } from "react-router";
+import { Link } from "react-router";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import {
@@ -10,12 +10,12 @@ import {
 	TableHeader,
 	TableRow,
 } from "~/components/ui/table";
-import type { loader } from "./loader";
+import type { Route } from "./+types";
 
 export { loader } from "./loader";
 
-export default function Books() {
-	const { books } = useLoaderData<typeof loader>();
+export default function Books({ loaderData }: Route.ComponentProps) {
+	const { books } = loaderData;
 
 	return (
 		<div className="container mx-auto py-8">
