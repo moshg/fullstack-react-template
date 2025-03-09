@@ -54,12 +54,6 @@ export default function Layout() {
 					<Outlet />
 				</div>
 			</main>
-
-			<footer className="py-6 border-t">
-				<div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
-					&copy; {new Date().getFullYear()} Book Manager
-				</div>
-			</footer>
 		</div>
 	);
 }
