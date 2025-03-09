@@ -10,4 +10,12 @@ export default [
 		path: "books/new",
 		file: "routes/books/new.tsx",
 	},
+	{
+		path: "categories",
+		file: "routes/categories/index/index.tsx",
+	},
+	{
+		path: "categories/new",
+		file: "routes/categories/new.tsx",
+	},
 ] satisfies RouteConfig;

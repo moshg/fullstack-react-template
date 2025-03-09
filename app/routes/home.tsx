@@ -8,5 +8,15 @@ export function meta() {
 }
 
 export default function Home() {
-	return <Link to="/books">Books</Link>;
+	return (
+		<>
+			<h1>Home</h1>
+			<p>
+				<Link to="/books">Books</Link>
+			</p>
+			<p>
+				<Link to="/categories">Categories</Link>
+			</p>
+		</>
+	);
 }
