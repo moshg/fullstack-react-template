@@ -4,7 +4,7 @@ export default [
 	index("routes/home.tsx"),
 	{
 		path: "books",
-		file: "routes/books/books/index.tsx",
+		file: "routes/books/index/index.tsx",
 	},
 	{
 		path: "books/new",
