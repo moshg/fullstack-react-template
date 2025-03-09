@@ -1,4 +1,5 @@
-import { Link, redirect } from "react-router";
+import { RefreshCw } from "lucide-react";
+import { Link, redirect, useFetcher } from "react-router";
 import { Button } from "~/components/ui/button";
 import { Checkbox } from "~/components/ui/checkbox";
 import { Label } from "~/components/ui/label";
@@ -84,6 +85,15 @@ export async function action({ request }: { request: Request }) {
 
 export default function NewBook({ loaderData }: Route.ComponentProps) {
 	const { categories } = loaderData;
+	const categoryFetcher = useFetcher<typeof loader>();
+
+	// Function to refresh the categories list
+	const refreshCategories = () => {
+		categoryFetcher.load("/books/new");
+	};
+
+	// Use updated categories if available
+	const displayCategories = categoryFetcher.data?.categories || categories;
 
 	return (
 		<div className="container mx-auto py-8">
@@ -140,10 +150,25 @@ export default function NewBook({ loaderData }: Route.ComponentProps) {
 					</div>
 
 					<div>
-						{/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
-						<label className="block text-sm font-medium mb-2">Categories</label>
+						<div className="flex justify-between items-center mb-2">
+							{/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
+							<label className="block text-sm font-medium">Categories</label>
+							<Button
+								type="button"
+								variant="ghost"
+								size="icon"
+								onClick={refreshCategories}
+								disabled={categoryFetcher.state === "loading"}
+								title="Refresh Categories"
+								className="h-8 w-8"
+							>
+								<RefreshCw
+									className={`h-4 w-4 ${categoryFetcher.state === "loading" ? "animate-spin" : ""}`}
+								/>
+							</Button>
+						</div>
 						<div className="space-y-2">
-							{categories.map((category) => (
+							{displayCategories.map((category) => (
 								<div key={category.id} className="flex items-center space-x-2">
 									<Checkbox
 										id={`category-${category.id}`}
@@ -155,6 +180,9 @@ export default function NewBook({ loaderData }: Route.ComponentProps) {
 									</Label>
 								</div>
 							))}
+							{displayCategories.length === 0 && (
+								<p className="text-sm text-gray-500">No categories available</p>
+							)}
 						</div>
 					</div>
 
