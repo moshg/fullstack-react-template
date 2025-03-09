@@ -11,7 +11,6 @@ import {
 } from "~/components/ui/table";
 import type { loader } from "./loader";
 
-export { action } from "./action";
 export { loader } from "./loader";
 
 export default function Books() {
