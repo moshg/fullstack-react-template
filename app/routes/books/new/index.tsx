@@ -1,14 +1,16 @@
 import { parseWithZod } from "@conform-to/zod";
 import { redirect, useFetcher } from "react-router";
+import { getAppContext } from "~/config/context";
 import { getCategories } from "~/routes/categories/index/api/get-categories";
 import type { Route } from "./+types";
 import { createBook } from "./api/create-book";
 import NewBook from "./components/new-book";
 import { bookCreateSchema } from "./types/book-create-model";
 
-export async function loader() {
+export async function loader({ request }: Route.LoaderArgs) {
 	try {
-		const categories = await getCategories();
+		const ctx = getAppContext(request);
+		const categories = await getCategories(ctx);
 		return { categories };
 	} catch (error) {
 		console.error("Failed to fetch categories:", error);
@@ -18,6 +20,8 @@ export async function loader() {
 
 export async function action({ request }: { request: Request }) {
 	try {
+		const ctx = getAppContext(request);
+
 		const formData = await request.formData();
 		const submission = parseWithZod(formData, {
 			schema: bookCreateSchema,
@@ -29,7 +33,7 @@ export async function action({ request }: { request: Request }) {
 		}
 
 		// Insert the new book
-		await createBook(submission.value);
+		await createBook(ctx, submission.value);
 
 		// Redirect to the books list page
 		return redirect("/books");

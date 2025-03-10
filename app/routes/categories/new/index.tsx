@@ -1,11 +1,14 @@
 import { parseWithZod } from "@conform-to/zod";
 import { redirect } from "react-router";
+import { getAppContext } from "~/config/context";
 import { createCategory } from "./api/create-category";
 import { NewCategory } from "./components/new-category";
 import { categoryCreateSchema } from "./types/category-create-model";
 
 export async function action({ request }: { request: Request }) {
 	try {
+		const ctx = getAppContext(request);
+
 		const formData = await request.formData();
 		const submission = parseWithZod(formData, {
 			schema: categoryCreateSchema,
@@ -18,7 +21,7 @@ export async function action({ request }: { request: Request }) {
 
 		// Create new category
 		const { name, description = "" } = submission.value;
-		createCategory({ name, description });
+		await createCategory(ctx, { name, description });
 
 		// Redirect to categories list page
 		return redirect("/categories");

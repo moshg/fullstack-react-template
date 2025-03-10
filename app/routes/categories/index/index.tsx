@@ -1,10 +1,12 @@
+import { getAppContext } from "~/config/context";
 import type { Route } from "./+types";
 import { getCategories } from "./api/get-categories";
 import { Categories } from "./components/categories";
 
-export async function loader() {
+export async function loader({ request }: Route.LoaderArgs) {
 	try {
-		const categories = await getCategories();
+		const ctx = getAppContext(request);
+		const categories = await getCategories(ctx);
 		return { categories };
 	} catch (error) {
 		console.error("Failed to fetch categories:", error);

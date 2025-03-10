@@ -1,11 +1,11 @@
 import { eq } from "drizzle-orm";
-import { db } from "~/config/drizzle";
 import { bookCategoriesTable, booksTable, categoriesTable } from "~/db/schema";
+import type { AppContext } from "~/lib/context";
 import type { BookModel } from "../types/book-model";
 
-export async function getBooks(): Promise<BookModel[]> {
+export async function getBooks(ctx: AppContext): Promise<BookModel[]> {
 	// Fetch all books
-	const books = await db
+	const books = await ctx.db
 		.select({
 			id: booksTable.id,
 			title: booksTable.title,
@@ -17,7 +17,7 @@ export async function getBooks(): Promise<BookModel[]> {
 	// For each book, fetch its categories
 	const booksWithCategories = await Promise.all(
 		books.map(async (book) => {
-			const categories = await db
+			const categories = await ctx.db
 				.select({
 					id: categoriesTable.id,
 					name: categoriesTable.name,

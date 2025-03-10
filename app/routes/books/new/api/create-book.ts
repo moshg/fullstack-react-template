@@ -1,11 +1,12 @@
-import { db } from "~/config/drizzle";
 import { bookCategoriesTable, booksTable } from "~/db/schema";
+import type { AppContext } from "~/lib/context";
 import type { BookCreateModel } from "../types/book-create-model";
 
 export async function createBook(
+	ctx: AppContext,
 	book: BookCreateModel,
 ): Promise<{ id: number }> {
-	return await db.transaction(async (tx) => {
+	return await ctx.db.transaction(async (tx) => {
 		// Insert the new book
 		const [newBook] = await tx
 			.insert(booksTable)
