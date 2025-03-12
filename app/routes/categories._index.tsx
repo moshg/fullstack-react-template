@@ -1,7 +1,7 @@
 import { getAppContext } from "~/config/context";
-import type { Route } from "./+types";
-import { getCategories } from "./api/get-categories";
-import { Categories } from "./components/categories";
+import { getCategories } from "~/features/categories/index/api/get-categories";
+import { Categories } from "~/features/categories/index/components/categories";
+import type { Route } from "./+types/categories._index";
 
 export async function loader({ request }: Route.LoaderArgs) {
 	const ctx = getAppContext(request);

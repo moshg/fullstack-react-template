@@ -1,7 +1,7 @@
-import { Link, Outlet, useLocation } from "react-router";
+import { Link, useLocation } from "react-router";
 import { cn } from "~/lib/utils";
 
-export default function Layout() {
+export default function AppLayout({ children }: { children: React.ReactNode }) {
 	const location = useLocation();
 
 	// Function to determine if a tab is active
@@ -50,9 +50,7 @@ export default function Layout() {
 			</header>
 
 			<main className="flex-1 py-6">
-				<div className="container mx-auto px-4 max-w-3xl">
-					<Outlet />
-				</div>
+				<div className="container mx-auto px-4 max-w-3xl">{children}</div>
 			</main>
 		</div>
 	);

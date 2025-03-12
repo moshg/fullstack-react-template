@@ -1,7 +1,7 @@
 import { getAppContext } from "~/config/context";
-import type { Route } from "./+types";
-import { getBooks } from "./api/getBooks";
-import Books from "./components/books";
+import { getBooks } from "~/features/books/index/api/getBooks";
+import Books from "~/features/books/index/components/books";
+import type { Route } from "./+types/books._index";
 
 export async function loader({ request }: Route.LoaderArgs) {
 	const ctx = getAppContext(request);

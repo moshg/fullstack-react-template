@@ -1,11 +1,11 @@
 import { parseWithZod } from "@conform-to/zod";
 import { redirect, useFetcher } from "react-router";
 import { getAppContext } from "~/config/context";
-import { getCategories } from "~/routes/categories/index/api/get-categories";
-import type { Route } from "./+types";
-import { createBook } from "./api/create-book";
-import NewBook from "./components/new-book";
-import { bookCreateSchema } from "./types/book-create-model";
+import { createBook } from "~/features/books/new/api/create-book";
+import NewBook from "~/features/books/new/components/new-book";
+import { bookCreateSchema } from "~/features/books/new/types/book-create-model";
+import { getCategories } from "~/features/categories/index/api/get-categories";
+import type { Route } from "./+types/books.new";
 
 export async function loader({ request }: Route.LoaderArgs) {
 	const ctx = getAppContext(request);
