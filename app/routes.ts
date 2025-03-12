@@ -7,6 +7,7 @@ import {
 
 export default [
 	layout("routes/layout.tsx", [
+		{ path: "health", file: "routes/health/index.ts" },
 		index("routes/index.tsx"),
 		...prefix("books", [
 			index("routes/books/index/index.tsx"),
