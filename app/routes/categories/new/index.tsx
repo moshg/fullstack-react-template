@@ -6,9 +6,10 @@ import { NewCategory } from "./components/new-category";
 import { categoryCreateSchema } from "./types/category-create-model";
 
 export async function action({ request }: { request: Request }) {
-	try {
-		const ctx = getAppContext(request);
+	const ctx = getAppContext(request);
 
+	try {
+		throw new Error("test");
 		const formData = await request.formData();
 		const submission = parseWithZod(formData, {
 			schema: categoryCreateSchema,
@@ -26,7 +27,7 @@ export async function action({ request }: { request: Request }) {
 		// Redirect to categories list page
 		return redirect("/categories");
 	} catch (error) {
-		console.error("Failed to create category:", error);
+		ctx.logger.error("Failed to create category:", error);
 		return {
 			errors: { form: "Failed to create category. Please try again." },
 		};

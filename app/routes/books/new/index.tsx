@@ -8,20 +8,21 @@ import NewBook from "./components/new-book";
 import { bookCreateSchema } from "./types/book-create-model";
 
 export async function loader({ request }: Route.LoaderArgs) {
+	const ctx = getAppContext(request);
+
 	try {
-		const ctx = getAppContext(request);
 		const categories = await getCategories(ctx);
 		return { categories };
 	} catch (error) {
-		console.error("Failed to fetch categories:", error);
+		ctx.logger.error("Failed to fetch categories:", error);
 		return { categories: [] };
 	}
 }
 
 export async function action({ request }: { request: Request }) {
-	try {
-		const ctx = getAppContext(request);
+	const ctx = getAppContext(request);
 
+	try {
 		const formData = await request.formData();
 		const submission = parseWithZod(formData, {
 			schema: bookCreateSchema,
@@ -38,7 +39,7 @@ export async function action({ request }: { request: Request }) {
 		// Redirect to the books list page
 		return redirect("/books");
 	} catch (error) {
-		console.error("Failed to create book:", error);
+		ctx.logger.error("Failed to create book:", error);
 		return {
 			errors: { form: "Failed to create book. Please try again." },
 		};
