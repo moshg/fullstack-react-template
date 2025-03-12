@@ -4,15 +4,15 @@ import { getBooks } from "./api/getBooks";
 import Books from "./components/books";
 
 export async function loader({ request }: Route.LoaderArgs) {
-	try {
-		const ctx = getAppContext(request);
+	const ctx = getAppContext(request);
 
+	try {
 		// Fetch all books
 		const books = await getBooks(ctx);
 
 		return { books };
 	} catch (error) {
-		console.error("Failed to fetch books:", error);
+		ctx.logger.error("Failed to fetch books:", error);
 		return { books: [] };
 	}
 }
