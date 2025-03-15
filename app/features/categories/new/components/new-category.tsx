@@ -68,7 +68,7 @@ export function NewCategory() {
 					</div>
 
 					<div className="flex justify-end pt-4">
-						<Button type="submit">Save Category</Button>
+						<Button type="submit">Add</Button>
 					</div>
 				</form>
 			</div>

@@ -147,7 +147,7 @@ export default function NewBook({
 					</div>
 
 					<div className="flex justify-end pt-4">
-						<Button type="submit">Save Book</Button>
+						<Button type="submit">Add</Button>
 					</div>
 				</form>
 			</div>

@@ -17,9 +17,9 @@ export default function Books({ books }: { books: BookModel[] }) {
 		<div className="container mx-auto py-8">
 			<div className="flex justify-between items-center mb-6">
 				<h1 className="text-2xl font-bold">Book List</h1>
-				<Link to="/books/new">
-					<Button>Add Book</Button>
-				</Link>
+				<Button asChild>
+					<Link to="/books/new">Add</Link>
+				</Button>
 			</div>
 
 			<Table>

@@ -20,9 +20,9 @@ export function Categories({
 		<div className="container mx-auto py-8">
 			<div className="flex justify-between items-center mb-6">
 				<h1 className="text-2xl font-bold">Category List</h1>
-				<Link to="/categories/new">
-					<Button>Add Category</Button>
-				</Link>
+				<Button asChild>
+					<Link to="/categories/new">Add</Link>
+				</Button>
 			</div>
 
 			<Table>
