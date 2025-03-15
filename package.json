@@ -8,7 +8,11 @@
 		"start": "react-router-serve ./build/server/index.js",
 		"typecheck": "react-router typegen && tsc",
 		"check": "biome check .",
-		"check:write": "biome check --write ."
+		"check:write": "biome check --write .",
+		"e2e": "playwright test",
+		"e2e:headed": "playwright test --headed",
+		"db:generate": "drizzle-kit generate",
+		"db:push": "drizzle-kit push"
 	},
 	"dependencies": {
 		"@conform-to/react": "^1.2.2",
@@ -37,6 +41,7 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",
+		"@playwright/test": "^1.51.0",
 		"@react-router/dev": "^7.2.0",
 		"@tailwindcss/vite": "^4.0.0",
 		"@types/node": "^20",
