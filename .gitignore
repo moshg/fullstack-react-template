@@ -13,6 +13,7 @@
 
 # SQLite
 local.db
+test.db
 
 # Playwright
 /test-results/
