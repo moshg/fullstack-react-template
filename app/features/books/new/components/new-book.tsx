@@ -38,9 +38,9 @@ export default function NewBook({
 		<div className="container mx-auto py-8">
 			<div className="flex justify-between items-center mb-6">
 				<h1 className="text-2xl font-bold">Add New Book</h1>
-				<Link to="/books">
-					<Button variant="outline">Back to List</Button>
-				</Link>
+				<Button asChild>
+					<Link to="/books">Back to List</Link>
+				</Button>
 			</div>
 
 			<div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-sm">
