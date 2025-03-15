@@ -1,6 +1,7 @@
 import { drizzle } from "drizzle-orm/libsql";
-import { env } from "./env";
 
-export const db = drizzle(env.DB_FILE_NAME);
+export function getDb(dbFileName: string) {
+	return drizzle(dbFileName);
+}
 
-export type Database = typeof db;
+export type Database = ReturnType<typeof getDb>;
