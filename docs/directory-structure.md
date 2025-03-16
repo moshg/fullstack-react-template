@@ -34,9 +34,11 @@
 ## Configuration Files
 
 - `biome.json`: Biome configuration for linting and formatting
+- `commitlint.config.js`: Commitlint configuration for enforcing commit message conventions
 - `components.json`: shadcn/ui components configuration
 - `compose.yaml`: Docker Compose configuration
 - `drizzle.config.ts`: Drizzle ORM configuration
+- `lefthook.yml`: Lefthook configuration for managing Git hooks
 - `playwright.config.ts`: Playwright test configuration
 - `react-router.config.ts`: React Router configuration
 - `tsconfig.json`: TypeScript configuration

@@ -1,0 +1,20 @@
+# Refer for explanation to following link:
+# https://lefthook.dev/configuration/
+
+pre-push:
+  parallel: true
+  jobs:
+    - name: typecheck
+      run: pnpm typecheck
+    - name: lint
+      run: pnpm lint
+    - name: e2e
+      only:
+        - ref: main
+      run: pnpm e2e
+
+commit-msg:
+  jobs:
+    - name: commitlint
+      # {1} is the path to the temporary file containing the commit message
+      run: pnpm commitlint --edit {1}

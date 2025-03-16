@@ -19,10 +19,11 @@ See [Directory Structure Documentation](/docs/directory-structure.md).
 
 - [Node.js](https://nodejs.org)
 - [pnpm](https://pnpm.io)
+- [Lefthook](https://lefthook.dev/)
 
 ### Installation
 
-Install the dependencies:
+Install the dependencies and set up lefthook:
 
 ```bash
 pnpm install
