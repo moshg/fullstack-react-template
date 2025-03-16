@@ -10,6 +10,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "~/components/ui/table";
+import { p } from "~/lib/path";
 import type { BookModel } from "../shared/models/book-model";
 
 export function Books({ books }: { books: BookModel[] }) {
@@ -18,7 +19,7 @@ export function Books({ books }: { books: BookModel[] }) {
 			<div className="flex justify-between items-center mb-6">
 				<h1 className="text-2xl font-bold">Book List</h1>
 				<Button asChild>
-					<Link to="/books/new">Add</Link>
+					<Link to={p("/books/new")}>Add</Link>
 				</Button>
 			</div>
 

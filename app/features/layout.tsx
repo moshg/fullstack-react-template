@@ -6,6 +6,7 @@ import {
 	NavigationMenuList,
 	navigationMenuTriggerStyle,
 } from "~/components/ui/navigation-menu";
+import { p } from "~/lib/path";
 import { cn } from "~/lib/utils";
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
@@ -15,7 +16,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
 				<div className="container mx-auto px-4">
 					<div className="flex h-16 items-center justify-between">
 						<div className="flex items-center">
-							<RouterLink to="/" className="text-xl font-bold">
+							<RouterLink to={p("/")} className="text-xl font-bold">
 								Book Manager
 							</RouterLink>
 						</div>
@@ -24,10 +25,10 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
 					<NavigationMenu>
 						<NavigationMenuList>
 							<NavigationMenuItem>
-								<Link to="/books">Books</Link>
+								<Link to={p("/books")}>Books</Link>
 							</NavigationMenuItem>
 							<NavigationMenuItem>
-								<Link to="/categories">Categories</Link>
+								<Link to={p("/categories")}>Categories</Link>
 							</NavigationMenuItem>
 						</NavigationMenuList>
 					</NavigationMenu>

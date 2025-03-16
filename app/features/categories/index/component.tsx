@@ -9,6 +9,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "~/components/ui/table";
+import { p } from "~/lib/path";
 import type { CategoryModel } from "../shared/models/category-model";
 
 export function Categories({
@@ -21,7 +22,7 @@ export function Categories({
 			<div className="flex justify-between items-center mb-6">
 				<h1 className="text-2xl font-bold">Category List</h1>
 				<Button asChild>
-					<Link to="/categories/new">Add</Link>
+					<Link to={p("/categories/new")}>Add</Link>
 				</Button>
 			</div>
 
