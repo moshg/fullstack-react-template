@@ -9,6 +9,6 @@ export async function booksLoader(ctx: ServerContext) {
 		return { books };
 	} catch (error) {
 		ctx.logger.error("Failed to fetch books:", error);
-		return { books: [] };
+		throw new Error("Failed to fetch books", { cause: error });
 	}
 }

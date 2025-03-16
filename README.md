@@ -13,6 +13,10 @@
 
 See [Directory Structure Documentation](/docs/directory-structure.md).
 
+### Error Handling
+
+See [Error Handling Documentation](/docs/error-handling.md).
+
 ## Getting Started
 
 ### Prerequisites

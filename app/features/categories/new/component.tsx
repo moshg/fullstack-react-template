@@ -30,6 +30,13 @@ export function NewCategory() {
 
 			<div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-sm">
 				<form method="post" className="space-y-4" {...getFormProps(form)}>
+					{form.errors && (
+						<div className="text-red-500 text-sm p-3 bg-red-50 rounded-md mb-4">
+							{form.errors.map((error) => (
+								<div key={error}>{error}</div>
+							))}
+						</div>
+					)}
 					<div>
 						<label
 							htmlFor={fields.name.id}
