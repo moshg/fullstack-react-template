@@ -1,9 +1,6 @@
-import { parseWithZod } from "@conform-to/zod";
-import { redirect } from "react-router";
 import { getServerContext } from "~/config/context";
-import { NewCategory } from "~/features/categories/new/components/new-category";
-import { categoryCreateModelSchema } from "~/features/categories/shared/models/category-create-model";
-import { createCategory } from "~/features/categories/shared/server/create-category";
+import { newCategoryAction } from "~/features/categories/new/action";
+import { NewCategory } from "~/features/categories/new/component";
 
 export function meta() {
 	return [
@@ -18,28 +15,7 @@ export function meta() {
 export async function action({ request }: { request: Request }) {
 	const ctx = getServerContext(request);
 
-	try {
-		const formData = await request.formData();
-		const submission = parseWithZod(formData, {
-			schema: categoryCreateModelSchema,
-		});
-
-		// Return early if there are validation errors
-		if (submission.status !== "success") {
-			return submission.reply();
-		}
-
-		// Create new category
-		await createCategory(ctx, submission.value);
-
-		// Redirect to categories list page
-		return redirect("/categories");
-	} catch (error) {
-		ctx.logger.error("Failed to create category:", error);
-		return {
-			errors: { form: "Failed to create category. Please try again." },
-		};
-	}
+	return newCategoryAction(ctx, request);
 }
 
 export default function Component() {

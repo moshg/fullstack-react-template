@@ -6,9 +6,9 @@ import { Button } from "~/components/ui/button";
 import { Checkbox } from "~/components/ui/checkbox";
 import { Label } from "~/components/ui/label";
 import type { CategoryModel } from "~/features/categories/shared/models/category-model";
-import { bookCreateRequestSchema } from "../models/book-create-request";
+import { bookCreateRequestSchema } from "./models/book-create-request";
 
-export default function NewBook({
+export function NewBook({
 	categories,
 	categoriesFetcher,
 }: {

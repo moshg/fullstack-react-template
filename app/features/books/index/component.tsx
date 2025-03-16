@@ -10,9 +10,9 @@ import {
 	TableHeader,
 	TableRow,
 } from "~/components/ui/table";
-import type { BookModel } from "../../shared/models/book-model";
+import type { BookModel } from "../shared/models/book-model";
 
-export default function Books({ books }: { books: BookModel[] }) {
+export function Books({ books }: { books: BookModel[] }) {
 	return (
 		<div className="container mx-auto py-8">
 			<div className="flex justify-between items-center mb-6">
