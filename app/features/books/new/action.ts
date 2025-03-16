@@ -23,8 +23,6 @@ export async function newBookAction(ctx: ServerContext, request: Request) {
 		return redirect("/books");
 	} catch (error) {
 		ctx.logger.error("Failed to create book:", error);
-		return {
-			errors: { form: "Failed to create book. Please try again." },
-		};
+		throw new Error("Failed to create book", { cause: error });
 	}
 }

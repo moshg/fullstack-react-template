@@ -13,18 +13,24 @@ export async function newCategoryAction(ctx: ServerContext, request: Request) {
 
 		// Return early if there are validation errors
 		if (submission.status !== "success") {
+			// If you want to return a strict response, wrap it with react-router's data and return 400
+			// return data(submission.reply(), { status: 400 });
 			return submission.reply();
 		}
 
 		// Create new category
-		await createCategory(ctx, submission.value);
+		const result = await createCategory(ctx, submission.value);
+
+		if (!result.ok) {
+			return submission.reply({
+				formErrors: [result.err.message],
+			});
+		}
 
 		// Redirect to categories list page
 		return redirect("/categories");
 	} catch (error) {
 		ctx.logger.error("Failed to create category:", error);
-		return {
-			errors: { form: "Failed to create category. Please try again." },
-		};
+		throw new Error("Failed to create category", { cause: error });
 	}
 }

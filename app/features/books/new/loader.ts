@@ -7,6 +7,6 @@ export async function newBookLoader(ctx: ServerContext) {
 		return { categories };
 	} catch (error) {
 		ctx.logger.error("Failed to fetch categories:", error);
-		return { categories: [] };
+		throw new Error("Failed to fetch categories", { cause: error });
 	}
 }
