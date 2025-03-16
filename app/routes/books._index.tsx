@@ -3,6 +3,13 @@ import { getBooks } from "~/features/books/index/api/getBooks";
 import Books from "~/features/books/index/components/books";
 import type { Route } from "./+types/books._index";
 
+export function meta() {
+	return [
+		{ title: "Book List" },
+		{ name: "description", content: "Browse and manage your book collection" },
+	];
+}
+
 export async function loader({ request }: Route.LoaderArgs) {
 	const ctx = getAppContext(request);
 

@@ -7,6 +7,13 @@ import { bookCreateSchema } from "~/features/books/new/types/book-create-model";
 import { getCategories } from "~/features/categories/index/api/get-categories";
 import type { Route } from "./+types/books.new";
 
+export function meta() {
+	return [
+		{ title: "Add New Book" },
+		{ name: "description", content: "Add a new book to your collection" },
+	];
+}
+
 export async function loader({ request }: Route.LoaderArgs) {
 	const ctx = getAppContext(request);
 

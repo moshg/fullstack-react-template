@@ -5,6 +5,16 @@ import { createCategory } from "~/features/categories/new/api/create-category";
 import { NewCategory } from "~/features/categories/new/components/new-category";
 import { categoryCreateSchema } from "~/features/categories/new/types/category-create-model";
 
+export function meta() {
+	return [
+		{ title: "Add New Category" },
+		{
+			name: "description",
+			content: "Create a new category for organizing books",
+		},
+	];
+}
+
 export async function action({ request }: { request: Request }) {
 	const ctx = getAppContext(request);
 
