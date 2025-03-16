@@ -6,7 +6,7 @@ import { Button } from "~/components/ui/button";
 import { Checkbox } from "~/components/ui/checkbox";
 import { Label } from "~/components/ui/label";
 import type { CategoryModel } from "~/features/categories/shared/models/category-model";
-import { bookCreateSchema } from "../../shared/models/book-create-model";
+import { bookCreateModelSchema } from "../../shared/models/book-create-model";
 
 export default function NewBook({
 	categories,
@@ -21,7 +21,7 @@ export default function NewBook({
 	const [form, fields] = useForm({
 		lastResult,
 		onValidate({ formData }) {
-			return parseWithZod(formData, { schema: bookCreateSchema });
+			return parseWithZod(formData, { schema: bookCreateModelSchema });
 		},
 		shouldRevalidate: "onBlur",
 	});

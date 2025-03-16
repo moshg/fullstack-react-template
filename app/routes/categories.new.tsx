@@ -2,7 +2,7 @@ import { parseWithZod } from "@conform-to/zod";
 import { redirect } from "react-router";
 import { getServerContext } from "~/config/context";
 import { NewCategory } from "~/features/categories/new/components/new-category";
-import { categoryCreateSchema } from "~/features/categories/shared/models/category-create-model";
+import { categoryCreateModelSchema } from "~/features/categories/shared/models/category-create-model";
 import { createCategory } from "~/features/categories/shared/server/create-category";
 
 export function meta() {
@@ -21,7 +21,7 @@ export async function action({ request }: { request: Request }) {
 	try {
 		const formData = await request.formData();
 		const submission = parseWithZod(formData, {
-			schema: categoryCreateSchema,
+			schema: categoryCreateModelSchema,
 		});
 
 		// Return early if there are validation errors

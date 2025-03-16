@@ -2,7 +2,7 @@ import { parseWithZod } from "@conform-to/zod";
 import { redirect, useFetcher } from "react-router";
 import { getServerContext } from "~/config/context";
 import NewBook from "~/features/books/new/components/new-book";
-import { bookCreateSchema } from "~/features/books/shared/models/book-create-model";
+import { bookCreateModelSchema } from "~/features/books/shared/models/book-create-model";
 import { createBook } from "~/features/books/shared/server/create-book";
 import { getCategories } from "~/features/categories/shared/server/get-categories";
 import type { Route } from "./+types/books.new";
@@ -32,7 +32,7 @@ export async function action({ request }: { request: Request }) {
 	try {
 		const formData = await request.formData();
 		const submission = parseWithZod(formData, {
-			schema: bookCreateSchema,
+			schema: bookCreateModelSchema,
 		});
 
 		// Return early if there are validation errors

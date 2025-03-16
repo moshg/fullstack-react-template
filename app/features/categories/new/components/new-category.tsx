@@ -7,14 +7,14 @@ import {
 import { parseWithZod } from "@conform-to/zod";
 import { Link, useActionData } from "react-router";
 import { Button } from "~/components/ui/button";
-import { categoryCreateSchema } from "../../shared/models/category-create-model";
+import { categoryCreateModelSchema } from "../../shared/models/category-create-model";
 
 export function NewCategory() {
 	const lastResult = useActionData();
 	const [form, fields] = useForm({
 		lastResult,
 		onValidate({ formData }) {
-			return parseWithZod(formData, { schema: categoryCreateSchema });
+			return parseWithZod(formData, { schema: categoryCreateModelSchema });
 		},
 		shouldRevalidate: "onBlur",
 	});

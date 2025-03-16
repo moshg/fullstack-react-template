@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const bookCreateSchema = z.object({
+export const bookCreateModelSchema = z.object({
 	title: z.string().min(1, "Title is required"),
 	author: z.string().min(1, "Author is required"),
 	publishYear: z
@@ -19,4 +19,4 @@ export const bookCreateSchema = z.object({
 		.transform((val) => val.map((id) => Number(id))),
 });
 
-export type BookCreateModel = z.infer<typeof bookCreateSchema>;
+export type BookCreateModel = z.infer<typeof bookCreateModelSchema>;
