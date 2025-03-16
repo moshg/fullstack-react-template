@@ -14,15 +14,7 @@ alwaysApply: true
 - E2E Test: Playwright
 
 ## Directory Structure
-- app
-  - components: Stores reusable UI components. shadcn/ui-based components are in the `ui` subdirectory.
-  - config: Manages application settings. Includes database connections, environment variables, and context settings. Can only be accessed from the root component.
-  - db: Defines database schemas and queries using Drizzle ORM.
-  - features: Directories organized by feature
-  - lib: Provides utility functions and helpers.
-  - routes: lication routing. `getContext` from context.ts can only be called from here.
-  - root.tsx: The root component that serves as the entry point for the application.
-- e2e: Defines E2E tests.
+See [directory-structure.md](mdc:docs/directory-structure.md).
 
 # Library Notes
 ## React Router
@@ -36,8 +28,7 @@ If it doesn't exist, run `pnpx shadcn@latest add <component_name>` to add the co
 Do not use shadcn/ui's `Form` component. `Form` depends on react-hook-form, but we use conform as our form library.
 
 ## Drizzle ORM
-The connection is in [drizzle.ts](mdc:app/config/drizzle.ts).
-Schema information is in [schema.ts](mdc:app/db/schema.ts).
+Schema information is in [schema.ts](mdc:app/server/db/schema.ts).
 
 # Coding Conventions
 - Use absolute imports except when accessing sibling directories. Absolute imports should be in the format `import { item } from "~/path/to/module"`.
