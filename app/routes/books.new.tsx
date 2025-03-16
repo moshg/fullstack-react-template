@@ -1,10 +1,10 @@
 import { parseWithZod } from "@conform-to/zod";
 import { redirect, useFetcher } from "react-router";
 import { getServerContext } from "~/config/context";
-import { createBook } from "~/features/books/new/api/create-book";
 import NewBook from "~/features/books/new/components/new-book";
-import { bookCreateSchema } from "~/features/books/new/types/book-create-model";
-import { getCategories } from "~/features/categories/index/api/get-categories";
+import { bookCreateSchema } from "~/features/books/shared/models/book-create-model";
+import { createBook } from "~/features/books/shared/server/create-book";
+import { getCategories } from "~/features/categories/shared/server/get-categories";
 import type { Route } from "./+types/books.new";
 
 export function meta() {

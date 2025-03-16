@@ -1,6 +1,6 @@
 import type { ServerContext } from "~/server/context";
 import { bookCategoriesTable, booksTable } from "~/server/db/schema";
-import type { BookCreateModel } from "../types/book-create-model";
+import type { BookCreateModel } from "../models/book-create-model";
 
 export async function createBook(
 	ctx: ServerContext,

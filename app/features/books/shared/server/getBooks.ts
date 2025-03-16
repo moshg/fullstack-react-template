@@ -5,7 +5,7 @@ import {
 	booksTable,
 	categoriesTable,
 } from "~/server/db/schema";
-import type { BookModel } from "../types/book-model";
+import type { BookModel } from "../models/book-model";
 
 export async function getBooks(ctx: ServerContext): Promise<BookModel[]> {
 	// Fetch all books

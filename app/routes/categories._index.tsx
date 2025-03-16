@@ -1,6 +1,6 @@
 import { getServerContext } from "~/config/context";
-import { getCategories } from "~/features/categories/index/api/get-categories";
 import { Categories } from "~/features/categories/index/components/categories";
+import { getCategories } from "~/features/categories/shared/server/get-categories";
 import type { Route } from "./+types/categories._index";
 
 export function meta() {

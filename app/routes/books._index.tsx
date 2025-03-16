@@ -1,6 +1,6 @@
 import { getServerContext } from "~/config/context";
-import { getBooks } from "~/features/books/index/api/getBooks";
 import Books from "~/features/books/index/components/books";
+import { getBooks } from "~/features/books/shared/server/getBooks";
 import type { Route } from "./+types/books._index";
 
 export function meta() {

@@ -1,6 +1,6 @@
 import type { ServerContext } from "~/server/context";
 import { categoriesTable } from "~/server/db/schema";
-import type { CategoryModel } from "../types/category-model";
+import type { CategoryModel } from "../models/category-model";
 
 /**
  * Returns a list of all categories

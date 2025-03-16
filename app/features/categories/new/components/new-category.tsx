@@ -7,7 +7,7 @@ import {
 import { parseWithZod } from "@conform-to/zod";
 import { Link, useActionData } from "react-router";
 import { Button } from "~/components/ui/button";
-import { categoryCreateSchema } from "../types/category-create-model";
+import { categoryCreateSchema } from "../../shared/models/category-create-model";
 
 export function NewCategory() {
 	const lastResult = useActionData();

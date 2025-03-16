@@ -1,9 +1,9 @@
 import { parseWithZod } from "@conform-to/zod";
 import { redirect } from "react-router";
 import { getServerContext } from "~/config/context";
-import { createCategory } from "~/features/categories/new/api/create-category";
 import { NewCategory } from "~/features/categories/new/components/new-category";
-import { categoryCreateSchema } from "~/features/categories/new/types/category-create-model";
+import { categoryCreateSchema } from "~/features/categories/shared/models/category-create-model";
+import { createCategory } from "~/features/categories/shared/server/create-category";
 
 export function meta() {
 	return [
