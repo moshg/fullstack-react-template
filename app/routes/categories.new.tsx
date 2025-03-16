@@ -30,8 +30,7 @@ export async function action({ request }: { request: Request }) {
 		}
 
 		// Create new category
-		const { name, description = "" } = submission.value;
-		await createCategory(ctx, { name, description });
+		await createCategory(ctx, submission.value);
 
 		// Redirect to categories list page
 		return redirect("/categories");
