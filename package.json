@@ -12,7 +12,10 @@
 		"e2e": "playwright test",
 		"e2e:headed": "playwright test --headed",
 		"db:generate": "drizzle-kit generate",
-		"db:push": "drizzle-kit push"
+	},
+	"engines": {
+		"node": ">=22.14.0",
+		"pnpm": ">=9.15.1"
 	},
 	"dependencies": {
 		"@conform-to/react": "^1.2.2",

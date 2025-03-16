@@ -15,6 +15,11 @@ See [Directory Structure Documentation](/docs/directory-structure.md).
 
 ## Getting Started
 
+### Prerequisites
+
+- [Node.js](https://nodejs.org)
+- [pnpm](https://pnpm.io)
+
 ### Installation
 
 Install the dependencies:
