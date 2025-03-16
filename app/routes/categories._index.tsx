@@ -1,4 +1,4 @@
-import { getAppContext } from "~/config/context";
+import { getServerContext } from "~/config/context";
 import { getCategories } from "~/features/categories/index/api/get-categories";
 import { Categories } from "~/features/categories/index/components/categories";
 import type { Route } from "./+types/categories._index";
@@ -11,7 +11,7 @@ export function meta() {
 }
 
 export async function loader({ request }: Route.LoaderArgs) {
-	const ctx = getAppContext(request);
+	const ctx = getServerContext(request);
 
 	try {
 		const categories = await getCategories(ctx);

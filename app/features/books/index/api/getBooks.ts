@@ -1,5 +1,5 @@
 import { eq } from "drizzle-orm";
-import type { AppContext } from "~/server/context";
+import type { ServerContext } from "~/server/context";
 import {
 	bookCategoriesTable,
 	booksTable,
@@ -7,7 +7,7 @@ import {
 } from "~/server/db/schema";
 import type { BookModel } from "../types/book-model";
 
-export async function getBooks(ctx: AppContext): Promise<BookModel[]> {
+export async function getBooks(ctx: ServerContext): Promise<BookModel[]> {
 	// Fetch all books
 	const books = await ctx.db
 		.select({

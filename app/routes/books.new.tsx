@@ -1,6 +1,6 @@
 import { parseWithZod } from "@conform-to/zod";
 import { redirect, useFetcher } from "react-router";
-import { getAppContext } from "~/config/context";
+import { getServerContext } from "~/config/context";
 import { createBook } from "~/features/books/new/api/create-book";
 import NewBook from "~/features/books/new/components/new-book";
 import { bookCreateSchema } from "~/features/books/new/types/book-create-model";
@@ -15,7 +15,7 @@ export function meta() {
 }
 
 export async function loader({ request }: Route.LoaderArgs) {
-	const ctx = getAppContext(request);
+	const ctx = getServerContext(request);
 
 	try {
 		const categories = await getCategories(ctx);
@@ -27,7 +27,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 }
 
 export async function action({ request }: { request: Request }) {
-	const ctx = getAppContext(request);
+	const ctx = getServerContext(request);
 
 	try {
 		const formData = await request.formData();

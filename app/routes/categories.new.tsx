@@ -1,6 +1,6 @@
 import { parseWithZod } from "@conform-to/zod";
 import { redirect } from "react-router";
-import { getAppContext } from "~/config/context";
+import { getServerContext } from "~/config/context";
 import { createCategory } from "~/features/categories/new/api/create-category";
 import { NewCategory } from "~/features/categories/new/components/new-category";
 import { categoryCreateSchema } from "~/features/categories/new/types/category-create-model";
@@ -16,7 +16,7 @@ export function meta() {
 }
 
 export async function action({ request }: { request: Request }) {
-	const ctx = getAppContext(request);
+	const ctx = getServerContext(request);
 
 	try {
 		const formData = await request.formData();

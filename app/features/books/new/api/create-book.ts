@@ -1,9 +1,9 @@
-import type { AppContext } from "~/server/context";
+import type { ServerContext } from "~/server/context";
 import { bookCategoriesTable, booksTable } from "~/server/db/schema";
 import type { BookCreateModel } from "../types/book-create-model";
 
 export async function createBook(
-	ctx: AppContext,
+	ctx: ServerContext,
 	book: BookCreateModel,
 ): Promise<{ id: number }> {
 	return await ctx.db.transaction(async (tx) => {

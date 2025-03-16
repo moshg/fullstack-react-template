@@ -1,4 +1,4 @@
-import { getAppContext } from "~/config/context";
+import { getServerContext } from "~/config/context";
 import { getBooks } from "~/features/books/index/api/getBooks";
 import Books from "~/features/books/index/components/books";
 import type { Route } from "./+types/books._index";
@@ -11,7 +11,7 @@ export function meta() {
 }
 
 export async function loader({ request }: Route.LoaderArgs) {
-	const ctx = getAppContext(request);
+	const ctx = getServerContext(request);
 
 	try {
 		// Fetch all books
