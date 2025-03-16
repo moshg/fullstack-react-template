@@ -1,51 +1,36 @@
-import { Link, useLocation } from "react-router";
+import { Link as RouterLink, useLocation } from "react-router";
+import {
+	NavigationMenu,
+	NavigationMenuItem,
+	NavigationMenuLink,
+	NavigationMenuList,
+	navigationMenuTriggerStyle,
+} from "~/components/ui/navigation-menu";
 import { cn } from "~/lib/utils";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
-	const location = useLocation();
-
-	// Function to determine if a tab is active
-	const isActive = (path: string) => {
-		return location.pathname.startsWith(path);
-	};
-
 	return (
 		<div className="min-h-screen flex flex-col">
 			<header className="bg-white border-b">
 				<div className="container mx-auto px-4">
 					<div className="flex h-16 items-center justify-between">
 						<div className="flex items-center">
-							<Link to="/" className="text-xl font-bold">
+							<RouterLink to="/" className="text-xl font-bold">
 								Book Manager
-							</Link>
+							</RouterLink>
 						</div>
 					</div>
 
-					{/* Tab navigation */}
-					<nav className="flex space-x-4">
-						<Link
-							to="/books"
-							className={cn(
-								"px-3 py-2 text-sm font-medium rounded-md transition-colors",
-								isActive("/books")
-									? "bg-primary text-primary-foreground"
-									: "text-muted-foreground hover:text-foreground hover:bg-muted",
-							)}
-						>
-							Books
-						</Link>
-						<Link
-							to="/categories"
-							className={cn(
-								"px-3 py-2 text-sm font-medium rounded-md transition-colors",
-								isActive("/categories")
-									? "bg-primary text-primary-foreground"
-									: "text-muted-foreground hover:text-foreground hover:bg-muted",
-							)}
-						>
-							Categories
-						</Link>
-					</nav>
+					<NavigationMenu>
+						<NavigationMenuList>
+							<NavigationMenuItem>
+								<Link to="/books">Books</Link>
+							</NavigationMenuItem>
+							<NavigationMenuItem>
+								<Link to="/categories">Categories</Link>
+							</NavigationMenuItem>
+						</NavigationMenuList>
+					</NavigationMenu>
 				</div>
 			</header>
 
@@ -53,5 +38,27 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 				<div className="container mx-auto px-4 max-w-3xl">{children}</div>
 			</main>
 		</div>
+	);
+}
+
+function Link({ to, children }: { to: string; children: React.ReactNode }) {
+	const location = useLocation();
+	const isActive = location.pathname.startsWith(to);
+
+	return (
+		<NavigationMenuLink asChild active={isActive}>
+			<RouterLink
+				to={to}
+				className={cn(
+					navigationMenuTriggerStyle(),
+					"relative after:absolute after:bottom-0 after:left-0 after:right-0",
+					"after:h-[2px] after:bg-primary after:transform after:scale-x-0",
+					"after:transition-transform after:duration-200",
+					"data-[active]:after:scale-x-100",
+				)}
+			>
+				{children}
+			</RouterLink>
+		</NavigationMenuLink>
 	);
 }
