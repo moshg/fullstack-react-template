@@ -5,10 +5,10 @@ import { type FetcherWithComponents, Link, useActionData } from "react-router";
 import { Button } from "~/components/ui/button";
 import { Checkbox } from "~/components/ui/checkbox";
 import { Label } from "~/components/ui/label";
-import type { CategoryModel } from "~/features/categories/index/types/category-model";
-import { bookCreateSchema } from "../types/book-create-model";
+import type { CategoryModel } from "~/features/categories/shared/models/category-model";
+import { bookCreateRequestSchema } from "./models/book-create-request";
 
-export default function NewBook({
+export function NewBook({
 	categories,
 	categoriesFetcher,
 }: {
@@ -21,7 +21,7 @@ export default function NewBook({
 	const [form, fields] = useForm({
 		lastResult,
 		onValidate({ formData }) {
-			return parseWithZod(formData, { schema: bookCreateSchema });
+			return parseWithZod(formData, { schema: bookCreateRequestSchema });
 		},
 		shouldRevalidate: "onBlur",
 	});

@@ -9,7 +9,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "~/components/ui/table";
-import type { CategoryModel } from "../types/category-model";
+import type { CategoryModel } from "../shared/models/category-model";
 
 export function Categories({
 	categories,

@@ -1,9 +1,9 @@
-import { categoriesTable } from "~/db/schema";
-import type { AppContext } from "~/lib/context";
-import type { CategoryCreateModel } from "../types/category-create-model";
+import type { ServerContext } from "~/server/context";
+import { categoriesTable } from "~/server/db/schema";
+import type { CategoryCreateModel } from "../models/category-create-model";
 
 export async function createCategory(
-	ctx: AppContext,
+	ctx: ServerContext,
 	category: CategoryCreateModel,
 ) {
 	// Insert the new category

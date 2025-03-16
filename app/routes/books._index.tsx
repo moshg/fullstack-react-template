@@ -1,6 +1,6 @@
-import { getAppContext } from "~/config/context";
-import { getBooks } from "~/features/books/index/api/getBooks";
-import Books from "~/features/books/index/components/books";
+import { getServerContext } from "~/config/context";
+import { Books } from "~/features/books/index/component";
+import { booksLoader } from "~/features/books/index/loader";
 import type { Route } from "./+types/books._index";
 
 export function meta() {
@@ -11,17 +11,9 @@ export function meta() {
 }
 
 export async function loader({ request }: Route.LoaderArgs) {
-	const ctx = getAppContext(request);
+	const ctx = getServerContext(request);
 
-	try {
-		// Fetch all books
-		const books = await getBooks(ctx);
-
-		return { books };
-	} catch (error) {
-		ctx.logger.error("Failed to fetch books:", error);
-		return { books: [] };
-	}
+	return booksLoader(ctx);
 }
 
 export default function Component({ loaderData }: Route.ComponentProps) {
