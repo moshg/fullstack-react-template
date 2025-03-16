@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
-import { getDb } from "~/config/drizzle";
-import { createLogger } from "~/config/logger";
-import type { AppContext } from "~/lib/context";
+import type { AppContext } from "~/server/context";
+import { getDb } from "~/server/db";
+import { createLogger } from "~/server/logger";
 import { env } from "./env";
 
 export function getAppContext(request: Request): AppContext {

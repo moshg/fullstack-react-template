@@ -1,5 +1,5 @@
-import { bookCategoriesTable, booksTable } from "~/db/schema";
-import type { AppContext } from "~/lib/context";
+import type { AppContext } from "~/server/context";
+import { bookCategoriesTable, booksTable } from "~/server/db/schema";
 import type { BookCreateModel } from "../types/book-create-model";
 
 export async function createBook(

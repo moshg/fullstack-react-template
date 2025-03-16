@@ -1,5 +1,5 @@
-import { categoriesTable } from "~/db/schema";
-import type { AppContext } from "~/lib/context";
+import type { AppContext } from "~/server/context";
+import { categoriesTable } from "~/server/db/schema";
 import type { CategoryModel } from "../types/category-model";
 
 /**
