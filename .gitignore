@@ -1,8 +1,8 @@
 .DS_Store
 /node_modules/
 
-# Personal cursor project rules
-/.cursor/rules/personal_*.mdc
+# Local cursor project rules
+/.cursor/rules/*-local.mdc
 
 # env
 .env
