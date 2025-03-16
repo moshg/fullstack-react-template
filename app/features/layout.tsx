@@ -8,7 +8,7 @@ import {
 } from "~/components/ui/navigation-menu";
 import { cn } from "~/lib/utils";
 
-export default function AppLayout({ children }: { children: React.ReactNode }) {
+export function AppLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<div className="min-h-screen flex flex-col">
 			<header className="bg-white border-b">
