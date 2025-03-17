@@ -4,10 +4,17 @@
 
 ### Technology Stack
 
-- **Framework**: React Router
-- **UI Components**: shadcn/ui
-- **Database ORM**: Drizzle ORM
-- **Form Management**: conform
+| Category            | Technology                                       |
+| ------------------- | ------------------------------------------------ |
+| **Runtime**         | [Node.js](https://nodejs.org)                    |
+| **Package Manager** | [pnpm](https://pnpm.io)                          |
+| **Framework**       | [React Router](https://reactrouter.com)          |
+| **UI Components**   | [shadcn/ui](https://ui.shadcn.com)               |
+| **Database ORM**    | [Drizzle ORM](https://orm.drizzle.team)          |
+| **Form Management** | [conform](https://conform.guide)                 |
+| **Logging**         | [winston](https://github.com/winstonjs/winston)  |
+| **Error Handling**  | [option-t](https://github.com/option-t/option-t) |
+| **E2E Test**        | [Playwright](https://playwright.dev)             |
 
 ### Directory Structure
 
