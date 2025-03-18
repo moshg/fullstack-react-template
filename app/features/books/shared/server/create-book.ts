@@ -1,5 +1,5 @@
 import type { ServerContext } from "~/server/context";
-import { bookCategoriesTable, booksTable } from "~/server/db/schema";
+import { books, booksToCategories } from "~/server/db/schema";
 import type { BookCreateModel } from "../models/book-create-model";
 
 export async function createBook(
@@ -9,13 +9,13 @@ export async function createBook(
 	return await ctx.db.transaction(async (tx) => {
 		// Insert the new book
 		const [newBook] = await tx
-			.insert(booksTable)
+			.insert(books)
 			.values({
 				title: book.title,
 				author: book.author,
 				publishYear: book.publishYear,
 			})
-			.returning({ id: booksTable.id });
+			.returning({ id: books.id });
 
 		// Insert book-category relationships
 		if (book.categoryIds.length > 0) {
@@ -24,7 +24,7 @@ export async function createBook(
 				categoryId: categoryId,
 			}));
 
-			await tx.insert(bookCategoriesTable).values(bookCategoryValues);
+			await tx.insert(booksToCategories).values(bookCategoryValues);
 		}
 
 		return newBook;

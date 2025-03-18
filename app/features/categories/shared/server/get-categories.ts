@@ -8,7 +8,7 @@ export async function getCategories(
 	ctx: ServerContext,
 ): Promise<CategoryModel[]> {
 	// Fetch all categories
-	return await ctx.db.query.categoriesTable.findMany({
+	return await ctx.db.query.categories.findMany({
 		columns: {
 			id: true,
 			name: true,
