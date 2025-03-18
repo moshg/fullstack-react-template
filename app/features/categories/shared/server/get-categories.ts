@@ -1,5 +1,4 @@
 import type { ServerContext } from "~/server/context";
-import { categoriesTable } from "~/server/db/schema";
 import type { CategoryModel } from "../models/category-model";
 
 /**
@@ -9,11 +8,11 @@ export async function getCategories(
 	ctx: ServerContext,
 ): Promise<CategoryModel[]> {
 	// Fetch all categories
-	return await ctx.db
-		.select({
-			id: categoriesTable.id,
-			name: categoriesTable.name,
-			description: categoriesTable.description,
-		})
-		.from(categoriesTable);
+	return await ctx.db.query.categoriesTable.findMany({
+		columns: {
+			id: true,
+			name: true,
+			description: true,
+		},
+	});
 }

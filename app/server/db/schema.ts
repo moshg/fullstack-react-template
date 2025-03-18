@@ -1,3 +1,4 @@
+import { relations } from "drizzle-orm";
 import { int, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 export const categoriesTable = sqliteTable("categories", {
@@ -6,6 +7,10 @@ export const categoriesTable = sqliteTable("categories", {
 	description: text(),
 });
 
+export const categoriesRelations = relations(categoriesTable, ({ many }) => ({
+	bookCategories: many(bookCategoriesTable),
+}));
+
 export const booksTable = sqliteTable("books", {
 	id: int().primaryKey({ autoIncrement: true }),
 	title: text().notNull(),
@@ -13,7 +18,11 @@ export const booksTable = sqliteTable("books", {
 	publishYear: int(),
 });
 
-// 本とカテゴリの多対多関係のための中間テーブル
+export const booksRelations = relations(booksTable, ({ many }) => ({
+	bookCategories: many(bookCategoriesTable),
+}));
+
+// Intermediate table for many-to-many relationship between books and categories
 export const bookCategoriesTable = sqliteTable("book_categories", {
 	id: int().primaryKey({ autoIncrement: true }),
 	bookId: int()
@@ -23,3 +32,17 @@ export const bookCategoriesTable = sqliteTable("book_categories", {
 		.notNull()
 		.references(() => categoriesTable.id),
 });
+
+export const bookCategoriesRelations = relations(
+	bookCategoriesTable,
+	({ one }) => ({
+		book: one(booksTable, {
+			fields: [bookCategoriesTable.bookId],
+			references: [booksTable.id],
+		}),
+		category: one(categoriesTable, {
+			fields: [bookCategoriesTable.categoryId],
+			references: [categoriesTable.id],
+		}),
+	}),
+);

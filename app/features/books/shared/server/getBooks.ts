@@ -1,44 +1,23 @@
-import { eq } from "drizzle-orm";
 import type { ServerContext } from "~/server/context";
-import {
-	bookCategoriesTable,
-	booksTable,
-	categoriesTable,
-} from "~/server/db/schema";
 import type { BookModel } from "../models/book-model";
 
 export async function getBooks(ctx: ServerContext): Promise<BookModel[]> {
-	// Fetch all books
-	const books = await ctx.db
-		.select({
-			id: booksTable.id,
-			title: booksTable.title,
-			author: booksTable.author,
-			publishYear: booksTable.publishYear,
-		})
-		.from(booksTable);
+	// Fetch all books with their categories
+	const booksWithCategories = await ctx.db.query.booksTable.findMany({
+		columns: {
+			id: true,
+			title: true,
+			author: true,
+			publishYear: true,
+		},
+		with: { bookCategories: { with: { category: true } } },
+	});
 
-	// For each book, fetch its categories
-	const booksWithCategories = await Promise.all(
-		books.map(async (book) => {
-			const categories = await ctx.db
-				.select({
-					id: categoriesTable.id,
-					name: categoriesTable.name,
-				})
-				.from(bookCategoriesTable)
-				.innerJoin(
-					categoriesTable,
-					eq(bookCategoriesTable.categoryId, categoriesTable.id),
-				)
-				.where(eq(bookCategoriesTable.bookId, book.id));
-
-			return {
-				...book,
-				categories,
-			};
-		}),
-	);
-
-	return booksWithCategories;
+	return booksWithCategories.map((book) => ({
+		...book,
+		categories: book.bookCategories.map((bc) => ({
+			id: bc.category.id,
+			name: bc.category.name,
+		})),
+	}));
 }
