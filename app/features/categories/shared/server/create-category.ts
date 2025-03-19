@@ -1,7 +1,7 @@
 import { LibsqlError } from "@libsql/client";
 import { type Result, createErr, createOk } from "option-t/plain_result";
 import type { ServerContext } from "~/server/context";
-import { categoriesTable } from "~/server/db/schema";
+import { categories } from "~/server/db/schema";
 import type { CategoryCreateModel } from "../models/category-create-model";
 
 export async function createCategory(
@@ -10,7 +10,7 @@ export async function createCategory(
 ): Promise<Result<undefined, Error>> {
 	try {
 		// Insert the new category
-		await ctx.db.insert(categoriesTable).values({
+		await ctx.db.insert(categories).values({
 			name: category.name,
 			description: category.description,
 		});

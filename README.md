@@ -40,6 +40,18 @@ Install the dependencies and set up lefthook:
 pnpm install
 ```
 
+Copy the `.env.example` file to `.env` and set the environment variables:
+
+```bash
+cp .env.example .env
+```
+
+Create a database:
+
+```bash
+pnpm db:migrate
+```
+
 ### Development
 
 Start the development server with HMR:
@@ -80,3 +92,8 @@ docker compose build
 # Run the container
 docker compose up
 ```
+
+### Database Migrations
+
+This template adopts a strategy where migration scripts are generated using `drizzle-kit generate` and migrations are executed with `drizzle-kit migrate`.
+Other migration strategies are explained on [Drizzle migrations fundamentals](https://orm.drizzle.team/docs/migrations).
