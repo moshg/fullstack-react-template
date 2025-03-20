@@ -11,7 +11,7 @@ import {
 	TableRow,
 } from "~/components/ui/table";
 import { p } from "~/lib/path";
-import type { BookModel } from "../shared/models/book-model";
+import type { BookModel } from "./models/book-model";
 
 export function Books({ books }: { books: BookModel[] }) {
 	return (

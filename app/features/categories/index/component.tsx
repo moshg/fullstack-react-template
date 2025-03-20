@@ -10,7 +10,7 @@ import {
 	TableRow,
 } from "~/components/ui/table";
 import { p } from "~/lib/path";
-import type { CategoryModel } from "../shared/models/category-model";
+import type { CategoryModel } from "./models/category-model";
 
 export function Categories({
 	categories,

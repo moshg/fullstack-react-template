@@ -3,10 +3,5 @@ export interface BookModel {
 	title: string;
 	author: string;
 	publishYear: number | null;
-	categories: CategoryModel[];
-}
-
-export interface CategoryModel {
-	id: number;
-	name: string;
+	categories: { id: number; name: string }[];
 }
