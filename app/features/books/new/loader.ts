@@ -1,4 +1,4 @@
-import { getCategories } from "~/features/categories/shared/server/get-categories";
+import { getCategories } from "~/features/categories/index/loader";
 import type { ServerContext } from "~/server/context";
 
 export async function newBookLoader(ctx: ServerContext) {
