@@ -1,8 +1,8 @@
 import { relations } from "drizzle-orm";
-import { int, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { integer, pgTable, text } from "drizzle-orm/pg-core";
 
-export const categories = sqliteTable("categories", {
-	id: int().primaryKey({ autoIncrement: true }),
+export const categories = pgTable("categories", {
+	id: integer().primaryKey().generatedByDefaultAsIdentity(),
 	name: text().notNull().unique(),
 	description: text(),
 });
@@ -11,11 +11,11 @@ export const categoriesRelations = relations(categories, ({ many }) => ({
 	bookCategories: many(booksToCategories),
 }));
 
-export const books = sqliteTable("books", {
-	id: int().primaryKey({ autoIncrement: true }),
+export const books = pgTable("books", {
+	id: integer().primaryKey().generatedByDefaultAsIdentity(),
 	title: text().notNull(),
 	author: text().notNull(),
-	publishYear: int(),
+	publishYear: integer(),
 });
 
 export const booksRelations = relations(books, ({ many }) => ({
@@ -23,12 +23,11 @@ export const booksRelations = relations(books, ({ many }) => ({
 }));
 
 // Intermediate table for many-to-many relationship between books and categories
-export const booksToCategories = sqliteTable("books_to_categories", {
-	id: int().primaryKey({ autoIncrement: true }),
-	bookId: int()
+export const booksToCategories = pgTable("books_to_categories", {
+	bookId: integer()
 		.notNull()
 		.references(() => books.id),
-	categoryId: int()
+	categoryId: integer()
 		.notNull()
 		.references(() => categories.id),
 });

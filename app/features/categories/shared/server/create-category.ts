@@ -1,5 +1,5 @@
-import { LibsqlError } from "@libsql/client";
 import { type Result, createErr, createOk } from "option-t/plain_result";
+import pg from "pg";
 import type { ServerContext } from "~/server/context";
 import { categories } from "~/server/db/schema";
 import type { CategoryCreateModel } from "../models/category-create-model";
@@ -16,10 +16,8 @@ export async function createCategory(
 		});
 		return createOk(undefined);
 	} catch (error) {
-		if (
-			error instanceof LibsqlError &&
-			error.code === "SQLITE_CONSTRAINT_UNIQUE"
-		) {
+		if (error instanceof pg.DatabaseError && error.code === "23505") {
+			// Unique violation in PostgreSQL
 			return createErr(new Error("Category already exists", { cause: error }));
 		}
 

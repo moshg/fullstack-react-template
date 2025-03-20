@@ -25,5 +25,8 @@ Do not use shadcn/ui's `Form` component. `Form` depends on react-hook-form, but 
 ## Drizzle ORM
 Schema information is in [schema.ts](mdc:app/server/db/schema.ts).
 
+## pg
+Please use default import for the 'pg' module since it's a CommonJS module.
+
 # Coding Conventions
 - Use absolute imports except when accessing sibling directories. Absolute imports should be in the format `import { item } from "~/path/to/module"`.

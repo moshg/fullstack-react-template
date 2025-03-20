@@ -1,9 +1,9 @@
 import { test as teardown } from "@playwright/test";
-import { getDb } from "~/server/db";
 import { books, booksToCategories, categories } from "~/server/db/schema";
+import { getTestDb } from "./db";
 
 teardown("delete database", async () => {
-	const db = getDb("file:test.db");
+	const db = getTestDb();
 
 	// Delete the database
 	await db.delete(booksToCategories);
