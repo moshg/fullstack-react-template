@@ -15,6 +15,7 @@
 | **Logging**         | [winston](https://github.com/winstonjs/winston)  |
 | **Error Handling**  | [option-t](https://github.com/option-t/option-t) |
 | **E2E Test**        | [Playwright](https://playwright.dev)             |
+| **Database**        | [PostgreSQL](https://www.postgresql.org)         |
 
 ### Directory Structure
 
