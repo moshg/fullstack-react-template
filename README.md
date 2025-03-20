@@ -24,6 +24,10 @@ See [Directory Structure Documentation](/docs/directory-structure.md).
 
 See [Error Handling Documentation](/docs/error-handling.md).
 
+## Specification
+
+See [Specification Documentation](/docs/specification.md).
+
 ## Getting Started
 
 ### Prerequisites
