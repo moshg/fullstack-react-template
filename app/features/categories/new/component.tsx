@@ -7,6 +7,7 @@ import {
 import { parseWithZod } from "@conform-to/zod";
 import { Link, useActionData } from "react-router";
 import { Button } from "~/components/ui/button";
+import { RequiredBadge } from "~/components/ui/required-badge";
 import { categoryCreateModelSchema } from "../shared/models/category-create-model";
 
 export function NewCategory() {
@@ -42,7 +43,7 @@ export function NewCategory() {
 							htmlFor={fields.name.id}
 							className="block text-sm font-medium mb-1"
 						>
-							Name
+							Name <RequiredBadge />
 						</label>
 						<input
 							{...getInputProps(fields.name, { type: "text" })}

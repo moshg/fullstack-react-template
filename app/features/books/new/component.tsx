@@ -5,6 +5,7 @@ import { type FetcherWithComponents, Link, useActionData } from "react-router";
 import { Button } from "~/components/ui/button";
 import { Checkbox } from "~/components/ui/checkbox";
 import { Label } from "~/components/ui/label";
+import { RequiredBadge } from "~/components/ui/required-badge";
 import type { CategoryModel } from "~/features/categories/index/models/category-model";
 import { bookCreateRequestSchema } from "./models/book-create-request";
 
@@ -54,7 +55,7 @@ export function NewBook({
 							htmlFor={fields.title.id}
 							className="block text-sm font-medium mb-1"
 						>
-							Title
+							Title <RequiredBadge />
 						</label>
 						<input
 							{...getInputProps(fields.title, { type: "text" })}
@@ -72,7 +73,7 @@ export function NewBook({
 							htmlFor={fields.author.id}
 							className="block text-sm font-medium mb-1"
 						>
-							Author
+							Author <RequiredBadge />
 						</label>
 						<input
 							{...getInputProps(fields.author, { type: "text" })}
