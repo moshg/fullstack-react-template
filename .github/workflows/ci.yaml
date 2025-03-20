@@ -70,7 +70,7 @@ jobs:
         run: pnpm install
 
       - name: Install Playwright Browsers
-        run: pnpm exec playwright install --with-deps
+        run: pnpm exec playwright install chromium --with-deps --only-shell
 
       - name: Copy env file
         run: cp .env.test .env
