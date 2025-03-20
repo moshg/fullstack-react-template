@@ -1,6 +1,6 @@
-import { getServerContext } from "~/config/context";
 import { Books } from "~/features/books/index/component";
 import { booksLoader } from "~/features/books/index/loader";
+import { serverContext } from "~/server/context";
 import type { Route } from "./+types/books._index";
 
 export function meta() {
@@ -10,8 +10,8 @@ export function meta() {
 	];
 }
 
-export async function loader({ request }: Route.LoaderArgs) {
-	const ctx = getServerContext(request);
+export async function loader({ context }: Route.LoaderArgs) {
+	const ctx = context.get(serverContext);
 
 	return booksLoader(ctx);
 }

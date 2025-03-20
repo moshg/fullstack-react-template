@@ -13,7 +13,7 @@ const db = getDb({
 	ssl: env.DB_SSL,
 });
 
-export function getServerContext(request: Request): ServerContext {
+export function getServerContext(): ServerContext {
 	const requestId = uuidv7();
 	const logger = createLogger({
 		format: env.LOG_FORMAT,

@@ -3,6 +3,7 @@ import { getServerContext } from "~/config/context";
 import { newBookAction } from "~/features/books/new/action";
 import { NewBook } from "~/features/books/new/component";
 import { newBookLoader } from "~/features/books/new/loader";
+import { serverContext } from "~/server/context";
 import type { Route } from "./+types/books.new";
 
 export function meta() {
@@ -12,14 +13,14 @@ export function meta() {
 	];
 }
 
-export async function loader({ request }: Route.LoaderArgs) {
-	const ctx = getServerContext(request);
+export async function loader({ context }: Route.LoaderArgs) {
+	const ctx = context.get(serverContext);
 
 	return newBookLoader(ctx);
 }
 
-export async function action({ request }: { request: Request }) {
-	const ctx = getServerContext(request);
+export async function action({ context, request }: Route.ActionArgs) {
+	const ctx = context.get(serverContext);
 
 	return newBookAction(ctx, request);
 }

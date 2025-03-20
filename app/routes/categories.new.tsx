@@ -1,7 +1,7 @@
-import { getServerContext } from "~/config/context";
 import { newCategoryAction } from "~/features/categories/new/action";
 import { NewCategory } from "~/features/categories/new/component";
-
+import { serverContext } from "~/server/context";
+import type { Route } from "./+types/categories.new";
 export function meta() {
 	return [
 		{ title: "Add New Category" },
@@ -12,8 +12,8 @@ export function meta() {
 	];
 }
 
-export async function action({ request }: { request: Request }) {
-	const ctx = getServerContext(request);
+export async function action({ context, request }: Route.ActionArgs) {
+	const ctx = context.get(serverContext);
 
 	return newCategoryAction(ctx, request);
 }

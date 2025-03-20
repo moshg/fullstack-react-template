@@ -2,8 +2,24 @@ import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
 
 import type { Route } from "./+types/root";
 import "./app.css";
+import { getServerContext } from "./config/context";
 import { RootErrorBoundary } from "./features/error/root-error-boundary";
 import { AppLayout } from "./features/layout";
+import { serverContext } from "./server/context";
+
+const contextMiddleware: Route.unstable_MiddlewareFunction = async (
+	{ context },
+	next,
+) => {
+	const ctx = getServerContext();
+	context.set(serverContext, ctx);
+
+	const res = await next();
+
+	return res;
+};
+
+export const unstable_middleware = [contextMiddleware];
 
 export const links: Route.LinksFunction = () => [
 	{ rel: "preconnect", href: "https://fonts.googleapis.com" },
