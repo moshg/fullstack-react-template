@@ -59,6 +59,12 @@ pnpm db:migrate
 
 ### Development
 
+Start the database:
+
+```bash
+docker compose up -d
+```
+
 Start the development server with HMR:
 
 ```bash
@@ -82,10 +88,10 @@ pnpm build
 To build and run using Docker:
 
 ```bash
-docker compose build
+docker compose -f compose.prod.yaml build
 
 # Run the container
-docker compose up
+docker compose -f compose.prod.yaml up
 ```
 
 ## Database Schema Changes
