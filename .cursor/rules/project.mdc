@@ -3,18 +3,13 @@ description: Project Structure and Coding Conventions
 globs: 
 alwaysApply: true
 ---
-# Project Structure
-## Technology Stack
-See [README.md](mdc:README.md).
+# Documents
+Be sure to read the following documents before starting work:
 
-## Specification
-See [specification.md](mdc:docs/specification.md).
-
-## Directory Structure
-See [directory-structure.md](mdc:docs/directory-structure.md).
-
-## Error Handling Strategy
-See [error-handling.md](mdc:docs/error-handling.md).
+- Technology Stack section in [README.md](mdc:README.md)
+- [specification.md](mdc:docs/specification.md)
+- [directory-structure.md](mdc:docs/directory-structure.md)
+- [error-handling.md](mdc:docs/error-handling.md)
 
 # Library Notes
 ## React Router
