@@ -5,9 +5,14 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
-    volumes:
-      - ./local.db:/app/local.db
+    env_file:
+      - .env
     environment:
-      - DB_FILE_NAME=file:local.db
       - NODE_ENV=production
     restart: unless-stopped
+  db:
+    image: postgres:17.4
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "${DB_PORT:-5432}:5432"
