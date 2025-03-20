@@ -4,6 +4,8 @@ import { getDb } from "~/server/db";
 import { createLogger } from "~/server/logger";
 import { env } from "./env";
 
+const db = getDb(env.DB_FILE_NAME);
+
 export function getServerContext(request: Request): ServerContext {
 	const requestId = uuidv4();
 	const logger = createLogger({
@@ -11,8 +13,6 @@ export function getServerContext(request: Request): ServerContext {
 		level: env.LOG_LEVEL,
 		requestId,
 	});
-
-	const db = getDb(env.DB_FILE_NAME);
 
 	return {
 		db,
