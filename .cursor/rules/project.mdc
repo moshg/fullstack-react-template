@@ -5,16 +5,16 @@ alwaysApply: true
 ---
 # Project Structure
 ## Technology Stack
-- Runtime: Node.js
-- Package Manager: pnpm
-- Framework: React Router
-- Components: shadcn/ui
-- ORM: Drizzle ORM
-- Forms: conform
-- E2E Test: Playwright
+See [README.md](mdc:README.md).
+
+## Specification
+See [specification.md](mdc:docs/specification.md).
 
 ## Directory Structure
 See [directory-structure.md](mdc:docs/directory-structure.md).
+
+## Error Handling Strategy
+See [error-handling.md](mdc:docs/error-handling.md).
 
 # Library Notes
 ## React Router
