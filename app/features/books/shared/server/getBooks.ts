@@ -10,14 +10,28 @@ export async function getBooks(ctx: ServerContext): Promise<BookModel[]> {
 			author: true,
 			publishYear: true,
 		},
-		with: { bookCategories: { with: { category: true } } },
+		with: {
+			bookCategories: {
+				with: {
+					category: {
+						columns: {
+							id: true,
+							name: true,
+						},
+					},
+				},
+			},
+		},
 	});
 
-	return booksWithCategories.map((book) => ({
-		...book,
-		categories: book.bookCategories.map((bc) => ({
-			id: bc.category.id,
-			name: bc.category.name,
-		})),
-	}));
+	return booksWithCategories.map((bookWithCategories) => {
+		const { bookCategories, ...book } = bookWithCategories;
+		return {
+			...book,
+			categories: bookCategories.map((bc) => ({
+				id: bc.category.id,
+				name: bc.category.name,
+			})),
+		};
+	});
 }
