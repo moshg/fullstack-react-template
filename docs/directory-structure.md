@@ -33,6 +33,12 @@
     - `loader.ts`: Route loader
 ## Configuration Files
 
+## Configuration Files
+
+- `.env.example`: Template for environment variables
+- `.dockerignore`: Files to exclude from Docker builds
+- `.gitignore`: Files to exclude from Git
+- `.node-version`: Node.js version specification
 - `biome.json`: Biome configuration for linting and formatting
 - `commitlint.config.js`: Commitlint configuration for enforcing commit message conventions
 - `components.json`: shadcn/ui components configuration
@@ -46,10 +52,3 @@
 - `Dockerfile`: Docker container configuration
 - `package.json`: Project dependencies and scripts
 - `pnpm-lock.yaml`: Dependency lock file
-
-## Development Files
-
-- `.env.sample`: Template for environment variables
-- `.dockerignore`: Files to exclude from Docker builds
-- `.gitignore`: Files to exclude from Git
-- `.node-version`: Node.js version specification
