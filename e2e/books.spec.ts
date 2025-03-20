@@ -13,12 +13,6 @@ test("Book creation and display", async ({ page }) => {
 	await page.getByLabel("Author").fill("Test Author");
 	await page.getByLabel("Publication Year").fill("2023");
 
-	// Select a category (if exists)
-	const categoryCheckbox = page.getByRole("checkbox").first();
-	if (await categoryCheckbox.isVisible()) {
-		await categoryCheckbox.check();
-	}
-
 	// Submit
 	await page.getByRole("button", { name: "Add" }).click();
 
