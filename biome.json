@@ -29,5 +29,26 @@
 		"formatter": {
 			"quoteStyle": "double"
 		}
-	}
+	},
+	"overrides": [
+		{
+			"include": ["app/**/*"],
+			"ignore": ["app/root.tsx", "app/routes/**/*"],
+			"linter": {
+				"rules": {
+					"nursery": {
+						"noRestrictedImports": {
+							"level": "error",
+							"options": {
+								"paths": {
+									"~/config/context": "Config modules should only be imported from route files",
+									"~/config/env": "Config modules should only be imported from route files"
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	]
 }
