@@ -1,9 +1,9 @@
 import { test as setup } from "@playwright/test";
-import { getDb } from "~/server/db";
 import { books, booksToCategories, categories } from "~/server/db/schema";
+import { getTestDb } from "./db";
 
 setup("reset database", async () => {
-	const db = getDb("file:test.db");
+	const db = getTestDb();
 
 	await db.delete(booksToCategories);
 	await db.delete(books);
