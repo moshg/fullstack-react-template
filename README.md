@@ -70,16 +70,6 @@ Create a production build:
 pnpm build
 ```
 
-## Database Schema Changes
-
-When you modify your database schema, you need to push the changes to your database:
-
-```bash
-pnpm drizzle-kit push
-```
-
-This command will update your database schema according to the changes you've made in your Drizzle ORM schema definitions.
-
 ## Deployment
 
 ### Docker Deployment
@@ -93,7 +83,20 @@ docker compose build
 docker compose up
 ```
 
-### Database Migrations
+## Database Schema Changes
 
-This template adopts a strategy where migration scripts are generated using `drizzle-kit generate` and migrations are executed with `drizzle-kit migrate`.
-Other migration strategies are explained on [Drizzle migrations fundamentals](https://orm.drizzle.team/docs/migrations).
+When modifying your database schema, follow these steps:
+
+1. Generate migration scripts based on your schema definitions:
+
+```bash
+pnpm db:generate
+```
+
+2. Run the generated migration scripts:
+
+```bash
+pnpm db:migrate
+```
+
+For other migration strategies, please refer to [Drizzle migrations fundamentals](https://orm.drizzle.team/docs/migrations).
