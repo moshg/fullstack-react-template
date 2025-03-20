@@ -1,13 +1,20 @@
-import { v4 as uuidv4 } from "uuid";
+import { v7 as uuidv7 } from "uuid";
 import type { ServerContext } from "~/server/context";
 import { getDb } from "~/server/db";
 import { createLogger } from "~/server/logger";
 import { env } from "./env";
 
-const db = getDb(env.DB_FILE_NAME);
+const db = getDb({
+	host: env.DB_HOST,
+	port: env.DB_PORT,
+	database: env.DB_NAME,
+	user: env.DB_USER,
+	password: env.DB_PASSWORD,
+	ssl: env.DB_SSL,
+});
 
 export function getServerContext(request: Request): ServerContext {
-	const requestId = uuidv4();
+	const requestId = uuidv7();
 	const logger = createLogger({
 		format: env.LOG_FORMAT,
 		level: env.LOG_LEVEL,
