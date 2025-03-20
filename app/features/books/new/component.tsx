@@ -44,7 +44,7 @@ export function NewBook({
 				</Button>
 			</div>
 
-			<div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-sm">
+			<div className="max-w-md mx-auto bg-card p-6 rounded-lg shadow-sm">
 				<form method="post" className="space-y-4" {...getFormProps(form)}>
 					{form.errors && (
 						<div className="text-red-500 text-sm">{form.errors}</div>

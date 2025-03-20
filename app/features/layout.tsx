@@ -12,7 +12,7 @@ import { cn } from "~/lib/utils";
 export function AppLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<div className="min-h-screen flex flex-col">
-			<header className="bg-white border-b">
+			<header className="bg-background border-b">
 				<div className="container mx-auto px-4">
 					<div className="flex h-16 items-center justify-between">
 						<div className="flex items-center">
@@ -35,7 +35,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
 				</div>
 			</header>
 
-			<main className="flex-1 py-6">
+			<main className="flex-1 py-6 bg-background">
 				<div className="container mx-auto px-4 max-w-3xl">{children}</div>
 			</main>
 		</div>
