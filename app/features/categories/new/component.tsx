@@ -25,12 +25,12 @@ export function NewCategory() {
 		<div className="container mx-auto py-8">
 			<div className="flex justify-between items-center mb-6">
 				<h1 className="text-2xl font-bold">Add New Category</h1>
-				<Button asChild>
+				<Button asChild variant="outline">
 					<Link to="/categories">Back to List</Link>
 				</Button>
 			</div>
 
-			<Card className="max-w-md mx-auto">
+			<Card>
 				<CardHeader>
 					<CardTitle>Category Details</CardTitle>
 				</CardHeader>
