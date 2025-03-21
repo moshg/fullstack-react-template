@@ -11,10 +11,6 @@ export function meta() {
 }
 
 export async function loader({ request, params }: Route.LoaderArgs) {
-	if (!params.id) {
-		throw new Response("Category ID is required", { status: 400 });
-	}
-
 	const ctx = getServerContext(request);
 	return categoryLoader(ctx, params.id);
 }
