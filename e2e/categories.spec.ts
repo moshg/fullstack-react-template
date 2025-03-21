@@ -7,7 +7,7 @@ test("Category creation and display", async ({ page }) => {
 
 	// Navigate to the new category creation page
 	await page.getByRole("link", { name: "Add" }).click();
-	await expect(page).toHaveURL("/categories/new");
+	await page.waitForURL("/categories/new");
 
 	// Fill in the form
 	const id = generateId();
@@ -22,7 +22,7 @@ test("Category creation and display", async ({ page }) => {
 	await page.getByRole("button", { name: "Add" }).click();
 
 	// Confirm redirect to the category list page
-	await expect(page).toHaveURL("/categories");
+	await page.waitForURL("/categories");
 
 	// Confirm that the created category appears in the list
 	const categoryRow = page.getByRole("row", {

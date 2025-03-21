@@ -7,7 +7,7 @@ test("Book creation and display", async ({ page }) => {
 
 	// Navigate to the new book creation page
 	await page.getByRole("link", { name: "Add" }).click();
-	await expect(page).toHaveURL("/books/new");
+	await page.waitForURL("/books/new");
 
 	// Fill in the form
 	const id = generateId();
@@ -24,7 +24,7 @@ test("Book creation and display", async ({ page }) => {
 	await page.getByRole("button", { name: "Add" }).click();
 
 	// Confirm redirect to the book list page
-	await expect(page).toHaveURL("/books");
+	await page.waitForURL("/books");
 
 	// Confirm that the created book appears in the list
 	const bookRow = page.getByRole("row", { name: new RegExp(book.title) });
