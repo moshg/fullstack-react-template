@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { generateId } from "./utils/id";
 
 test("Category creation and display", async ({ page }) => {
 	// Access the category list page
@@ -9,9 +10,13 @@ test("Category creation and display", async ({ page }) => {
 	await expect(page).toHaveURL("/categories/new");
 
 	// Fill in the form
-	const categoryName = `Test Category${Date.now()}`;
-	await page.getByLabel("Name").fill(categoryName);
-	await page.getByLabel("Description").fill("This is a test category");
+	const id = generateId();
+	const category = {
+		name: `Test Category ${id}`,
+		description: `Test Description ${id}`,
+	};
+	await page.getByLabel("Name").fill(category.name);
+	await page.getByLabel("Description").fill(category.description);
 
 	// Submit
 	await page.getByRole("button", { name: "Add" }).click();
@@ -20,5 +25,10 @@ test("Category creation and display", async ({ page }) => {
 	await expect(page).toHaveURL("/categories");
 
 	// Confirm that the created category appears in the list
-	await expect(page.getByText(categoryName)).toBeVisible();
+	const categoryRow = page.getByRole("row", {
+		name: new RegExp(category.name),
+	});
+	await expect(categoryRow).toBeVisible();
+	await expect(categoryRow.getByText(category.name)).toBeVisible();
+	await expect(categoryRow.getByText(category.description)).toBeVisible();
 });

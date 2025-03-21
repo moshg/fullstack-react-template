@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { generateId } from "./utils/id";
 
 test("Book creation and display", async ({ page }) => {
 	// Access the book list page
@@ -9,9 +10,15 @@ test("Book creation and display", async ({ page }) => {
 	await expect(page).toHaveURL("/books/new");
 
 	// Fill in the form
-	await page.getByLabel("Title").fill("Test Book");
-	await page.getByLabel("Author").fill("Test Author");
-	await page.getByLabel("Publication Year").fill("2023");
+	const id = generateId();
+	const book = {
+		title: `Test Book ${id}`,
+		author: `Test Author ${id}`,
+		publicationYear: "2023",
+	};
+	await page.getByLabel("Title").fill(book.title);
+	await page.getByLabel("Author").fill(book.author);
+	await page.getByLabel("Publication Year").fill(book.publicationYear);
 
 	// Submit
 	await page.getByRole("button", { name: "Add" }).click();
@@ -20,6 +27,9 @@ test("Book creation and display", async ({ page }) => {
 	await expect(page).toHaveURL("/books");
 
 	// Confirm that the created book appears in the list
-	await expect(page.getByText("Test Book")).toBeVisible();
-	await expect(page.getByText("Test Author")).toBeVisible();
+	const bookRow = page.getByRole("row", { name: new RegExp(book.title) });
+	await expect(bookRow).toBeVisible();
+	await expect(bookRow.getByText(book.title)).toBeVisible();
+	await expect(bookRow.getByText(book.author)).toBeVisible();
+	await expect(bookRow.getByText(book.publicationYear)).toBeVisible();
 });
