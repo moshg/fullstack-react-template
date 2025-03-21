@@ -2,8 +2,10 @@ export type Path =
 	| "/"
 	| "/books"
 	| "/books/new"
+	| `/books/${string}`
 	| "/categories"
-	| "/categories/new";
+	| "/categories/new"
+	| `/categories/${string}`;
 
 /**
  * Type-safe path helper function.
@@ -23,6 +25,6 @@ export type Path =
  * p("/invalid")   // Error: Argument of type '"/invalid"' is not assignable to parameter of type 'Path'
  * ```
  */
-export function p(path: Path): Path {
+export function p<T extends Path>(path: T): T {
 	return path;
 }

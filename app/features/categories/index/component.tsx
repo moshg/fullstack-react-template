@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { Button } from "~/components/ui/button";
 import {
 	Table,
@@ -17,6 +17,8 @@ export function Categories({
 }: {
 	categories: CategoryModel[];
 }) {
+	const navigate = useNavigate();
+
 	return (
 		<div className="container mx-auto py-8">
 			<div className="flex justify-between items-center mb-6">
@@ -44,7 +46,11 @@ export function Categories({
 						</TableRow>
 					) : (
 						categories.map((category) => (
-							<TableRow key={category.id}>
+							<TableRow
+								key={category.id}
+								className="hover:bg-muted cursor-pointer"
+								onClick={() => navigate(p(`/categories/${category.id}`))}
+							>
 								<TableCell>{category.id}</TableCell>
 								<TableCell className="font-medium">{category.name}</TableCell>
 								<TableCell>

@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import { useNavigate } from "react-router";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import {
@@ -14,6 +15,8 @@ import { p } from "~/lib/path";
 import type { BookModel } from "./models/book-model";
 
 export function Books({ books }: { books: BookModel[] }) {
+	const navigate = useNavigate();
+
 	return (
 		<div className="container mx-auto py-8">
 			<div className="flex justify-between items-center mb-6">
@@ -43,11 +46,15 @@ export function Books({ books }: { books: BookModel[] }) {
 						</TableRow>
 					) : (
 						books.map((book) => (
-							<TableRow key={book.id}>
+							<TableRow
+								key={book.id}
+								className="hover:bg-muted cursor-pointer"
+								onClick={() => navigate(p(`/books/${book.id}`))}
+							>
 								<TableCell>{book.id}</TableCell>
 								<TableCell className="font-medium">{book.title}</TableCell>
 								<TableCell>{book.author}</TableCell>
-								<TableCell>{book.publishYear || "Unknown"}</TableCell>
+								<TableCell>{book.publishYear}</TableCell>
 								<TableCell>
 									{book.categories.length === 0 ? (
 										<span className="text-gray-500">Uncategorized</span>
