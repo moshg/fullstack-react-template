@@ -50,6 +50,21 @@ test("User can create a category, see it in the list, and view its details", asy
 	await page.waitForURL("/categories");
 });
 
+test("User can navigate back from category creation page", async ({ page }) => {
+	// Navigate to the categories list
+	await page.goto("/categories");
+
+	// Go to the new category creation page
+	await page.getByRole("link", { name: "Add" }).click();
+	await page.waitForURL("/categories/new");
+
+	// Click the back button
+	await page.getByRole("link", { name: "Back" }).click();
+
+	// Verify we've returned to the categories list
+	await page.waitForURL("/categories");
+});
+
 test("Error is displayed when user attempts to create a category with duplicate name", async ({
 	page,
 }) => {

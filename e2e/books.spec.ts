@@ -62,6 +62,21 @@ test("User can create a book with category, see it in the list, and view its det
 	await page.waitForURL("/books");
 });
 
+test("User can navigate back from book creation page", async ({ page }) => {
+	// Navigate to the books list
+	await page.goto("/books");
+
+	// Go to the new book creation page
+	await page.getByRole("link", { name: "Add" }).click();
+	await page.waitForURL("/books/new");
+
+	// Click the back button
+	await page.getByRole("link", { name: "Back" }).click();
+
+	// Verify we've returned to the books list
+	await page.waitForURL("/books");
+});
+
 test("Error is displayed when accessing a non-existent book ID", async ({
 	page,
 }) => {
