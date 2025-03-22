@@ -1,7 +1,7 @@
 import { getServerContext } from "~/config/context";
 import { BookDetail } from "~/features/books/detail/component";
 import { bookLoader } from "~/features/books/detail/loader";
-import type { Route } from "./+types/books.$id";
+import type { Route } from "./+types/_app.books.$id";
 
 export function meta() {
 	return [

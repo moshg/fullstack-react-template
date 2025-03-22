@@ -1,6 +1,7 @@
 import { getServerContext } from "~/config/context";
 import { newCategoryAction } from "~/features/categories/new/action";
 import { NewCategory } from "~/features/categories/new/component";
+import type { Route } from "./+types/_app.categories.new";
 
 export function meta() {
 	return [
@@ -12,7 +13,7 @@ export function meta() {
 	];
 }
 
-export async function action({ request }: { request: Request }) {
+export async function action({ request }: Route.ActionArgs) {
 	const ctx = getServerContext(request);
 
 	return newCategoryAction(ctx, request);
