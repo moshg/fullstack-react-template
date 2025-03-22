@@ -11,10 +11,6 @@
 /.react-router/
 /build/
 
-# SQLite
-local.db
-test.db
-
 # Playwright
 /test-results/
 /playwright-report/
