@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { bookCreateModelSchema } from "../../shared/models/book-create-model";
+import { bookCreateModelSchema } from "../../shared/models/book-add-model";
 
 // Define use-case specific constraints and transformations
-export const bookCreateRequestSchema = z
+export const bookAddRequestSchema = z
 	.object({
 		title: z.string(),
 		author: z.string(),
@@ -16,4 +16,4 @@ export const bookCreateRequestSchema = z
 	})
 	.pipe(bookCreateModelSchema);
 
-export type BookCreateRequest = z.infer<typeof bookCreateRequestSchema>;
+export type BookCreateRequest = z.infer<typeof bookAddRequestSchema>;

@@ -1,14 +1,14 @@
 import { parseWithZod } from "@conform-to/zod";
 import { redirect } from "react-router";
 import type { ServerContext } from "~/server/context";
-import { createBook } from "../shared/server/create-book";
-import { bookCreateRequestSchema } from "./models/book-create-request";
+import { addBook } from "../shared/server/add-book";
+import { bookAddRequestSchema } from "./models/book-add-request";
 
 export async function newBookAction(ctx: ServerContext, request: Request) {
 	try {
 		const formData = await request.formData();
 		const submission = parseWithZod(formData, {
-			schema: bookCreateRequestSchema,
+			schema: bookAddRequestSchema,
 		});
 
 		// Return early if there are validation errors
@@ -17,12 +17,12 @@ export async function newBookAction(ctx: ServerContext, request: Request) {
 		}
 
 		// Insert the new book
-		await createBook(ctx, submission.value);
+		await addBook(ctx, submission.value);
 
 		// Redirect to the books list page
 		return redirect("/books");
 	} catch (error) {
-		ctx.logger.error("Failed to create book:", error);
-		throw new Error("Failed to create book", { cause: error });
+		ctx.logger.error("Failed to add book:", error);
+		throw new Error("Failed to add book", { cause: error });
 	}
 }

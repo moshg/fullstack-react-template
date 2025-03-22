@@ -8,7 +8,7 @@ import { Checkbox } from "~/components/ui/checkbox";
 import { Label } from "~/components/ui/label";
 import { RequiredBadge } from "~/components/ui/required-badge";
 import type { CategoryModel } from "~/features/categories/index/models/category-model";
-import { bookCreateRequestSchema } from "./models/book-create-request";
+import { bookAddRequestSchema } from "./models/book-add-request";
 
 export function NewBook({
 	categories,
@@ -23,7 +23,7 @@ export function NewBook({
 	const [form, fields] = useForm({
 		lastResult,
 		onValidate({ formData }) {
-			return parseWithZod(formData, { schema: bookCreateRequestSchema });
+			return parseWithZod(formData, { schema: bookAddRequestSchema });
 		},
 		shouldRevalidate: "onBlur",
 	});

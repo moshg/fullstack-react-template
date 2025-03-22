@@ -1,10 +1,10 @@
 import type { ServerContext } from "~/server/context";
 import { books, booksToCategories } from "~/server/db/schema";
-import type { BookCreateModel } from "../models/book-create-model";
+import type { BookAddModel } from "../models/book-add-model";
 
-export async function createBook(
+export async function addBook(
 	ctx: ServerContext,
-	book: BookCreateModel,
+	book: BookAddModel,
 ): Promise<{ id: number }> {
 	return await ctx.db.transaction(async (tx) => {
 		// Insert the new book

@@ -1,13 +1,13 @@
 import { expect, test } from "@playwright/test";
 import { generateId } from "./utils/id";
 
-test("User can create a category, see it in the list, and view its details", async ({
+test("User can add a category, see it in the list, and view its details", async ({
 	page,
 }) => {
 	// Access the category list page
 	await page.goto("/categories");
 
-	// Navigate to the new category creation page
+	// Navigate to the new category addition page
 	await page.getByRole("link", { name: "Add" }).click();
 	await page.waitForURL("/categories/new");
 
@@ -26,7 +26,7 @@ test("User can create a category, see it in the list, and view its details", asy
 	// Confirm redirect to the category list page
 	await page.waitForURL("/categories");
 
-	// Confirm that the created category appears in the list
+	// Confirm that the added category appears in the list
 	const categoryRow = page.getByRole("row", {
 		name: new RegExp(category.name),
 	});
@@ -50,11 +50,11 @@ test("User can create a category, see it in the list, and view its details", asy
 	await page.waitForURL("/categories");
 });
 
-test("User can navigate back from category creation page", async ({ page }) => {
+test("User can navigate back from category addition page", async ({ page }) => {
 	// Navigate to the categories list
 	await page.goto("/categories");
 
-	// Go to the new category creation page
+	// Go to the new category addition page
 	await page.getByRole("link", { name: "Add" }).click();
 	await page.waitForURL("/categories/new");
 
@@ -65,19 +65,19 @@ test("User can navigate back from category creation page", async ({ page }) => {
 	await page.waitForURL("/categories");
 });
 
-test("Error is displayed when user attempts to create a category with duplicate name", async ({
+test("Error is displayed when user attempts to add a category with duplicate name", async ({
 	page,
 }) => {
 	const id = generateId();
 
-	// Create the first category
+	// Add the first category
 	const categoryName = `Test Category ${id}`;
 	await page.goto("/categories/new");
 	await page.getByLabel("Name").fill(categoryName);
 	await page.getByLabel("Description").fill("First category");
 	await page.getByRole("button", { name: "Add" }).click();
 
-	// Try to create a second category with the same name
+	// Try to add a second category with the same name
 	await page.goto("/categories/new");
 	await page.getByLabel("Name").fill(categoryName);
 	await page.getByLabel("Description").fill("Second category");

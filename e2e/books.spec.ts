@@ -1,12 +1,12 @@
 import { expect, test } from "@playwright/test";
 import { generateId } from "./utils/id";
 
-test("User can create a book with category, see it in the list, and view its details", async ({
+test("User can add a book with category, see it in the list, and view its details", async ({
 	page,
 }) => {
 	const id = generateId();
 
-	// Create a category first
+	// Add a category first
 	const categoryName = `Relation Test ${id}`;
 	await page.goto("/categories/new");
 	await page.getByLabel("Name").fill(categoryName);
@@ -16,7 +16,7 @@ test("User can create a book with category, see it in the list, and view its det
 	// Access the book list page
 	await page.goto("/books");
 
-	// Navigate to the new book creation page
+	// Navigate to the new book addition page
 	await page.getByRole("link", { name: "Add" }).click();
 	await page.waitForURL("/books/new");
 
@@ -37,7 +37,7 @@ test("User can create a book with category, see it in the list, and view its det
 	// Confirm redirect to the book list page
 	await page.waitForURL("/books");
 
-	// Confirm that the created book appears in the list
+	// Confirm that the added book appears in the list
 	const bookRow = page.getByRole("row", { name: new RegExp(book.title) });
 	await expect(bookRow).toBeVisible();
 	await expect(bookRow.getByText(book.title)).toBeVisible();
@@ -62,11 +62,11 @@ test("User can create a book with category, see it in the list, and view its det
 	await page.waitForURL("/books");
 });
 
-test("User can navigate back from book creation page", async ({ page }) => {
+test("User can navigate back from book addition page", async ({ page }) => {
 	// Navigate to the books list
 	await page.goto("/books");
 
-	// Go to the new book creation page
+	// Go to the new book addition page
 	await page.getByRole("link", { name: "Add" }).click();
 	await page.waitForURL("/books/new");
 

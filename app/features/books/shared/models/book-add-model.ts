@@ -14,4 +14,4 @@ export const bookCreateModelSchema = z
 	})
 	.brand<"BookCreateModel">();
 
-export type BookCreateModel = z.infer<typeof bookCreateModelSchema>;
+export type BookAddModel = z.infer<typeof bookCreateModelSchema>;

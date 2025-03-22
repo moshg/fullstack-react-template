@@ -9,14 +9,14 @@ import { Link, useActionData } from "react-router";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { RequiredBadge } from "~/components/ui/required-badge";
-import { categoryCreateModelSchema } from "../shared/models/category-create-model";
+import { categoryAddModelSchema } from "../shared/models/category-add-model";
 
 export function NewCategory() {
 	const lastResult = useActionData();
 	const [form, fields] = useForm({
 		lastResult,
 		onValidate({ formData }) {
-			return parseWithZod(formData, { schema: categoryCreateModelSchema });
+			return parseWithZod(formData, { schema: categoryAddModelSchema });
 		},
 		shouldRevalidate: "onBlur",
 	});

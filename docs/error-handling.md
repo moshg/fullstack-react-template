@@ -15,9 +15,9 @@ Expected errors are handled using the [option-t](https://github.com/option-t/opt
 - Entity constraints (e.g., uniqueness violations)
 - Not found errors
 
-option-t example: [create category function](/app/features/categories/shared/server/create-category.ts)
+option-t example: [add category function](/app/features/categories/shared/server/add-category.ts)
 
-conform example: [create category action](/app/features/categories/new/action.ts)
+conform example: [add category action](/app/features/categories/new/action.ts)
 
 ### Unexpected Errors
 
