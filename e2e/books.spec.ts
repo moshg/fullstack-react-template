@@ -1,7 +1,18 @@
 import { expect, test } from "@playwright/test";
 import { generateId } from "./utils/id";
 
-test("Book creation and display", async ({ page }) => {
+test("User can create a book with category, see it in the list, and view its details", async ({
+	page,
+}) => {
+	const id = generateId();
+
+	// Create a category first
+	const categoryName = `Relation Test ${id}`;
+	await page.goto("/categories/new");
+	await page.getByLabel("Name").fill(categoryName);
+	await page.getByRole("button", { name: "Add" }).click();
+	await page.waitForURL("/categories");
+
 	// Access the book list page
 	await page.goto("/books");
 
@@ -10,7 +21,6 @@ test("Book creation and display", async ({ page }) => {
 	await page.waitForURL("/books/new");
 
 	// Fill in the form
-	const id = generateId();
 	const book = {
 		title: `Test Book ${id}`,
 		author: `Test Author ${id}`,
@@ -19,6 +29,7 @@ test("Book creation and display", async ({ page }) => {
 	await page.getByLabel("Title").fill(book.title);
 	await page.getByLabel("Author").fill(book.author);
 	await page.getByLabel("Publication Year").fill(book.publicationYear);
+	await page.getByLabel(categoryName).check();
 
 	// Submit
 	await page.getByRole("button", { name: "Add" }).click();
@@ -32,29 +43,9 @@ test("Book creation and display", async ({ page }) => {
 	await expect(bookRow.getByText(book.title)).toBeVisible();
 	await expect(bookRow.getByText(book.author)).toBeVisible();
 	await expect(bookRow.getByText(book.publicationYear)).toBeVisible();
-});
-
-test("Book detail page navigation and display", async ({ page }) => {
-	// Create a new book first
-	await page.goto("/books/new");
-	const id = generateId();
-	const book = {
-		title: `Test Book for Detail ${id}`,
-		author: `Test Author ${id}`,
-		publicationYear: "2024",
-	};
-	await page.getByLabel("Title").fill(book.title);
-	await page.getByLabel("Author").fill(book.author);
-	await page.getByLabel("Publication Year").fill(book.publicationYear);
-	await page.getByRole("button", { name: "Add" }).click();
-
-	// Wait for redirect and book to appear in the list
-	await page.waitForURL("/books");
-	await page
-		.getByRole("row", {
-			name: new RegExp(book.title),
-		})
-		.click();
+	await expect(bookRow.getByText(categoryName)).toBeVisible();
+	// Navigate to book detail page by clicking on the row
+	await bookRow.click();
 
 	// Wait for navigation to complete and verify content on the detail page
 	await page.waitForURL(/\/books\/\d+/);
@@ -64,25 +55,16 @@ test("Book detail page navigation and display", async ({ page }) => {
 	await expect(page.getByText(book.title)).toBeVisible();
 	await expect(page.getByText(book.author)).toBeVisible();
 	await expect(page.getByText(book.publicationYear)).toBeVisible();
+	await expect(page.getByText(categoryName)).toBeVisible();
 
 	// Test navigation back to list
 	await page.getByRole("link", { name: "Back to List" }).click();
 	await page.waitForURL("/books");
 });
 
-test("Book and category relationship", async ({ page }) => {
-	// Create a category
-	await page.goto("/categories/new");
-	const categoryName = `RelationTest${Date.now()}`;
-	await page.getByLabel("Name").fill(categoryName);
-	await page.getByRole("button", { name: "Add" }).click();
-
-	// Verify that the created category exists
-	await page.goto("/books/new");
-	await page.getByText(categoryName).isVisible();
-});
-
-test("Book detail page - Not found case", async ({ page }) => {
+test("Error is displayed when accessing a non-existent book ID", async ({
+	page,
+}) => {
 	// Access non-existent book
 	await page.goto("/books/999999");
 

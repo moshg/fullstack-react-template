@@ -1,7 +1,9 @@
 import { expect, test } from "@playwright/test";
 import { generateId } from "./utils/id";
 
-test("Category creation and display", async ({ page }) => {
+test("User can create a category, see it in the list, and view its details", async ({
+	page,
+}) => {
 	// Access the category list page
 	await page.goto("/categories");
 
@@ -31,27 +33,9 @@ test("Category creation and display", async ({ page }) => {
 	await expect(categoryRow).toBeVisible();
 	await expect(categoryRow.getByText(category.name)).toBeVisible();
 	await expect(categoryRow.getByText(category.description)).toBeVisible();
-});
 
-test("Category detail page navigation and display", async ({ page }) => {
-	// Create a new category first
-	await page.goto("/categories/new");
-	const id = generateId();
-	const category = {
-		name: `Test Category for Detail ${id}`,
-		description: `Test Description ${id}`,
-	};
-	await page.getByLabel("Name").fill(category.name);
-	await page.getByLabel("Description").fill(category.description);
-	await page.getByRole("button", { name: "Add" }).click();
-
-	// Wait for redirect and click on the category row
-	await page.waitForURL("/categories");
-	await page
-		.getByRole("row", {
-			name: new RegExp(category.name),
-		})
-		.click();
+	// Navigate to category detail page by clicking on the row
+	await categoryRow.click();
 
 	// Wait for navigation to complete and verify content on the detail page
 	await page.waitForURL(/\/categories\/\d+/);
@@ -66,9 +50,13 @@ test("Category detail page navigation and display", async ({ page }) => {
 	await page.waitForURL("/categories");
 });
 
-test("Duplicate category creation shows error", async ({ page }) => {
+test("Error is displayed when user attempts to create a category with duplicate name", async ({
+	page,
+}) => {
+	const id = generateId();
+
 	// Create the first category
-	const categoryName = `Test Category ${Date.now()}`;
+	const categoryName = `Test Category ${id}`;
 	await page.goto("/categories/new");
 	await page.getByLabel("Name").fill(categoryName);
 	await page.getByLabel("Description").fill("First category");
@@ -84,7 +72,9 @@ test("Duplicate category creation shows error", async ({ page }) => {
 	await expect(page.getByText("Category already exists")).toBeVisible();
 });
 
-test("Category detail page - Not found case", async ({ page }) => {
+test("Error is displayed when accessing a non-existent category ID", async ({
+	page,
+}) => {
 	// Access non-existent category
 	await page.goto("/categories/999999");
 
