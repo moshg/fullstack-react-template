@@ -6,6 +6,7 @@
 		"build": "react-router build",
 		"dev": "react-router dev",
 		"start": "react-router-serve ./build/server/index.js",
+		"check": "lefthook run pre-push",
 		"typecheck": "react-router typegen && tsc",
 		"lint": "biome check .",
 		"lint:fix": "biome check --write .",
