@@ -8,6 +8,7 @@
 		"start": "react-router-serve ./build/server/index.js",
 		"db:generate": "drizzle-kit generate --config drizzle.config.ts",
 		"db:migrate": "drizzle-kit migrate --config drizzle.config.ts",
+		"auth:generate": "pnpx @better-auth/cli generate --config app/config/context --output app/server/db/schema/auth-schema.ts",
 		"check": "lefthook run pre-push",
 		"typecheck": "react-router typegen && tsc",
 		"lint": "biome check .",
