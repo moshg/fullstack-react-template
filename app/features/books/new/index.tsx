@@ -1,14 +1,83 @@
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { RefreshCw } from "lucide-react";
-import { type FetcherWithComponents, Link, useActionData } from "react-router";
+import {
+	type FetcherWithComponents,
+	Link,
+	redirect,
+	useActionData,
+} from "react-router";
+import { z } from "zod";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Checkbox } from "~/components/ui/checkbox";
 import { Label } from "~/components/ui/label";
 import { RequiredBadge } from "~/components/ui/required-badge";
-import type { CategoryModel } from "~/features/categories/index/models/category-model";
-import { bookAddRequestSchema } from "./models/book-add-request";
+import type { ServerContext } from "~/server/context";
+import { addBook, bookCreateModelSchema } from "./server/add-book";
+
+type CategoryModel = {
+	id: number;
+	name: string;
+};
+
+export async function newBookLoader(ctx: ServerContext) {
+	try {
+		const categories = await getCategories(ctx);
+		return { categories };
+	} catch (error) {
+		ctx.logger.error("Failed to fetch categories:", error);
+		throw new Error("Failed to fetch categories", { cause: error });
+	}
+}
+
+function getCategories(ctx: ServerContext) {
+	return ctx.db.query.categories.findMany({
+		columns: {
+			id: true,
+			name: true,
+		},
+	});
+}
+
+export const bookAddRequestSchema = z
+	.object({
+		title: z.string(),
+		author: z.string(),
+		publishYear: z
+			.string()
+			.optional()
+			.transform((val) => (val ? Number(val) : undefined)),
+		categoryIds: z
+			.array(z.string())
+			.transform((val) => val.map((id) => Number(id))),
+	})
+	.pipe(bookCreateModelSchema);
+
+export type BookCreateRequest = z.infer<typeof bookAddRequestSchema>;
+
+export async function newBookAction(ctx: ServerContext, request: Request) {
+	try {
+		const formData = await request.formData();
+		const submission = parseWithZod(formData, {
+			schema: bookAddRequestSchema,
+		});
+
+		// Return early if there are validation errors
+		if (submission.status !== "success") {
+			return submission.reply();
+		}
+
+		// Insert the new book
+		await addBook(ctx, submission.value);
+
+		// Redirect to the books list page
+		return redirect("/books");
+	} catch (error) {
+		ctx.logger.error("Failed to add book:", error);
+		throw new Error("Failed to add book", { cause: error });
+	}
+}
 
 export function NewBook({
 	categories,

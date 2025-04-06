@@ -1,5 +1,4 @@
-import { Link } from "react-router";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import {
@@ -12,9 +11,66 @@ import {
 	TableRow,
 } from "~/components/ui/table";
 import { p } from "~/lib/path";
-import type { BookModel } from "./models/book-model";
+import type { ServerContext } from "~/server/context";
 
-export function Books({ books }: { books: BookModel[] }) {
+type BooksItemModel = {
+	id: number;
+	title: string;
+	author: string;
+	publishYear: number | null;
+	categories: { id: number; name: string }[];
+};
+
+export async function booksLoader(
+	ctx: ServerContext,
+): Promise<{ books: BooksItemModel[] }> {
+	try {
+		// Fetch all books
+		const books = await getBooks(ctx);
+
+		return { books };
+	} catch (error) {
+		ctx.logger.error("Failed to fetch books:", error);
+		throw new Error("Failed to fetch books", { cause: error });
+	}
+}
+
+async function getBooks(ctx: ServerContext): Promise<BooksItemModel[]> {
+	// Fetch all books with their categories
+	const booksWithCategories = await ctx.db.query.books.findMany({
+		columns: {
+			id: true,
+			title: true,
+			author: true,
+			publishYear: true,
+		},
+		with: {
+			bookCategories: {
+				with: {
+					category: {
+						columns: {
+							id: true,
+							name: true,
+						},
+					},
+				},
+			},
+		},
+	});
+
+	return booksWithCategories.map((bookWithCategories) => {
+		const { bookCategories, ...book } = bookWithCategories;
+		return {
+			...book,
+			categories: bookCategories.map((bc) => ({
+				id: bc.category.id,
+				name: bc.category.name,
+			})),
+		};
+	});
+}
+
+export function Books({ books }: { books: BooksItemModel[] }) {
 	const navigate = useNavigate();
 
 	return (

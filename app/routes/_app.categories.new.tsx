@@ -1,6 +1,5 @@
 import { getServerContext } from "~/config/context";
-import { newCategoryAction } from "~/features/categories/new/action";
-import { NewCategory } from "~/features/categories/new/component";
+import { NewCategory, newCategoryAction } from "~/features/categories/new";
 import type { Route } from "./+types/_app.categories.new";
 
 export function meta() {

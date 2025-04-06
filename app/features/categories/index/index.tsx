@@ -10,12 +10,47 @@ import {
 	TableRow,
 } from "~/components/ui/table";
 import { p } from "~/lib/path";
-import type { CategoryModel } from "./models/category-model";
+import type { ServerContext } from "~/server/context";
+
+type CategoriesItemModel = {
+	id: number;
+	name: string;
+	description: string | null;
+};
+
+export async function categoriesLoader(ctx: ServerContext): Promise<{
+	categories: CategoriesItemModel[];
+}> {
+	try {
+		const categories = await getCategories(ctx);
+		return { categories };
+	} catch (error) {
+		ctx.logger.error("Failed to fetch categories:", error);
+		throw new Error("Failed to fetch categories", { cause: error });
+	}
+}
+
+/**
+ * Returns a list of all categories
+ */
+async function getCategories(
+	ctx: ServerContext,
+): Promise<CategoriesItemModel[]> {
+	// Fetch all categories
+	return await ctx.db.query.categories.findMany({
+		// Explicitly specify columns to avoid unintentionally fetching additional columns when the DB schema changes
+		columns: {
+			id: true,
+			name: true,
+			description: true,
+		},
+	});
+}
 
 export function Categories({
 	categories,
 }: {
-	categories: CategoryModel[];
+	categories: CategoriesItemModel[];
 }) {
 	const navigate = useNavigate();
 

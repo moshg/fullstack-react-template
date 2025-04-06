@@ -1,8 +1,6 @@
 import { useFetcher } from "react-router";
 import { getServerContext } from "~/config/context";
-import { newBookAction } from "~/features/books/new/action";
-import { NewBook } from "~/features/books/new/component";
-import { newBookLoader } from "~/features/books/new/loader";
+import { NewBook, newBookAction, newBookLoader } from "~/features/books/new";
 import type { Route } from "./+types/_app.books.new";
 
 export function meta() {
