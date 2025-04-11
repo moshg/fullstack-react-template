@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { Button } from "~/components/ui/button";
 import {
 	Table,
@@ -59,7 +59,9 @@ export function Categories({
 			<div className="flex justify-between items-center mb-6">
 				<h1 className="text-2xl font-bold">Category List</h1>
 				<Button asChild>
-					<Link to={p("/categories/new")}>Add</Link>
+					{/* FIXME: Using <a> tag instead of <Link> component because <Link> would navigate to
+					   /categories instead of /categories/new due to client-side routing behavior */}
+					<a href={p("/categories/new")}>Add</a>
 				</Button>
 			</div>
 
