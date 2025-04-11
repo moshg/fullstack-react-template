@@ -1,4 +1,5 @@
 import { v7 as uuidv7 } from "uuid";
+import { getAuth } from "~/server/auth";
 import type { ServerContext } from "~/server/context";
 import { getDb } from "~/server/db";
 import { createLogger } from "~/server/logger";
@@ -12,6 +13,8 @@ const db = getDb({
 	password: env.DB_PASSWORD,
 	ssl: env.DB_SSL,
 });
+
+export const auth = getAuth(db);
 
 export function getServerContext(request: Request): ServerContext {
 	const requestId = uuidv7();
