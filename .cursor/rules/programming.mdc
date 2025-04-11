@@ -1,0 +1,30 @@
+---
+description: Knowledge about programming
+globs: 
+alwaysApply: true
+---
+# Programming Knowledge
+
+## Debugging
+
+When a test fails, first check if there are any discrepancies between the code being tested and the test code's expectations.
+
+### Playwright
+
+Playwright will timeout when the screen differs from what is expected.
+For example, when trying to click a button with the following test code:
+
+```typescript
+await page.getByRole('button', { name: 'Submit' }).click();
+```
+
+If the actual button label on the screen is "Send", Playwright will not be able to find the button and a timeout error will occur:
+
+```
+TimeoutError: locator.click: Timeout 30000ms exceeded.
+=========================== logs ===========================
+waiting for getByRole('button', { name: 'Submit' })
+============================================================
+```
+
+Anticipating this situation, verify that the button label on the actual screen matches what is expected in the test code.
