@@ -3,7 +3,6 @@ import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
 import type { Route } from "./+types/root";
 import "./app.css";
 import { RootErrorBoundary } from "./features/error/root-error-boundary";
-import { AppLayout } from "./features/layout";
 
 export const links: Route.LinksFunction = () => [
 	{ rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -37,11 +36,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-	return (
-		<AppLayout>
-			<Outlet />
-		</AppLayout>
-	);
+	return <Outlet />;
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {

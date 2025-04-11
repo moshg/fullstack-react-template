@@ -8,7 +8,6 @@ export function meta() {
 		},
 	];
 }
-
 export default function Component() {
 	return;
 }

@@ -1,9 +1,7 @@
 import { useFetcher } from "react-router";
 import { getServerContext } from "~/config/context";
-import { newBookAction } from "~/features/books/new/action";
-import { NewBook } from "~/features/books/new/component";
-import { newBookLoader } from "~/features/books/new/loader";
-import type { Route } from "./+types/books.new";
+import { NewBook, newBookAction, newBookLoader } from "~/features/books/new";
+import type { Route } from "./+types/_app.books.new";
 
 export function meta() {
 	return [
@@ -18,7 +16,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 	return newBookLoader(ctx);
 }
 
-export async function action({ request }: { request: Request }) {
+export async function action({ request }: Route.ActionArgs) {
 	const ctx = getServerContext(request);
 
 	return newBookAction(ctx, request);

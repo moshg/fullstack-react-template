@@ -1,12 +1,21 @@
 import { type Result, createErr, createOk } from "option-t/plain_result";
 import pg from "pg";
+import { z } from "zod";
 import type { ServerContext } from "~/server/context";
 import { categories } from "~/server/db/schema";
-import type { CategoryCreateModel } from "../models/category-add-model";
+
+export const categoryAddModelSchema = z
+	.object({
+		name: z.string().min(1, "Name is required"),
+		description: z.string().optional(),
+	})
+	.brand<"CategoryAddModel">();
+
+export type CategoryAddModel = z.infer<typeof categoryAddModelSchema>;
 
 export async function addCategory(
 	ctx: ServerContext,
-	category: CategoryCreateModel,
+	category: CategoryAddModel,
 ): Promise<Result<undefined, Error>> {
 	try {
 		// Insert the new category
