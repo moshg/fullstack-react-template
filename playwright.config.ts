@@ -45,9 +45,18 @@ export default defineConfig({
 			testMatch: /global\.teardown\.ts/,
 		},
 		{
-			name: "chromium",
-			use: { ...devices["Desktop Chrome"] },
+			name: "setup",
+			testMatch: /.*\.setup\.ts/,
 			dependencies: ["setup db"],
+		},
+		{
+			name: "chromium",
+			use: {
+				...devices["Desktop Chrome"],
+				// Use authentication state
+				storageState: "playwright/.cache/auth/user.json",
+			},
+			dependencies: ["setup db", "setup"],
 		},
 
 		// {
@@ -93,6 +102,16 @@ export default defineConfig({
 			},
 		},
 		{
+			command:
+				"docker compose -p full-stack-react-template-test up keycloak keycloak-init",
+			port: 8081,
+			reuseExistingServer: true,
+			timeout: 120 * 1000, // 2-minute timeout
+			env: {
+				KC_HTTP_PORT: "8081",
+			},
+		},
+		{
 			command: "pnpm dev",
 			url: "http://localhost:5173",
 			reuseExistingServer: !process.env.CI,
@@ -101,8 +120,9 @@ export default defineConfig({
 				DB_HOST: "localhost",
 				DB_PORT: "5433",
 				DB_NAME: "postgres",
-				DB_USER: "postgres",
-				DB_PASSWORD: "postgres",
+				DB_USER: "app_user",
+				DB_PASSWORD: "app_password",
+				KEYCLOAK_URL: "http://localhost:8081",
 			},
 		},
 	],
