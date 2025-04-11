@@ -18,7 +18,7 @@ type CategoriesItemModel = {
 	description: string | null;
 };
 
-export async function categoriesLoader(ctx: ServerContext): Promise<{
+export async function categoryListLoader(ctx: ServerContext): Promise<{
 	categories: CategoriesItemModel[];
 }> {
 	try {
@@ -47,7 +47,7 @@ async function getCategories(
 	});
 }
 
-export function Categories({
+export function CategoryList({
 	categories,
 }: {
 	categories: CategoriesItemModel[];

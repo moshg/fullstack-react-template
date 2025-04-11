@@ -1,5 +1,5 @@
 import { getServerContext } from "~/config/context";
-import { Books, booksLoader } from "~/features/books/index";
+import { BookList, bookListLoader } from "~/features/books/index";
 import type { Route } from "./+types/_app.books._index";
 
 export function meta() {
@@ -12,11 +12,11 @@ export function meta() {
 export async function loader({ request }: Route.LoaderArgs) {
 	const ctx = getServerContext(request);
 
-	return booksLoader(ctx);
+	return bookListLoader(ctx);
 }
 
 export default function Component({ loaderData }: Route.ComponentProps) {
 	const { books } = loaderData;
 
-	return <Books books={books} />;
+	return <BookList books={books} />;
 }

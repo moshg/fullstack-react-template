@@ -21,7 +21,7 @@ type BooksItemModel = {
 	categories: { id: number; name: string }[];
 };
 
-export async function booksLoader(
+export async function bookListLoader(
 	ctx: ServerContext,
 ): Promise<{ books: BooksItemModel[] }> {
 	try {
@@ -70,7 +70,7 @@ async function getBooks(ctx: ServerContext): Promise<BooksItemModel[]> {
 	});
 }
 
-export function Books({ books }: { books: BooksItemModel[] }) {
+export function BookList({ books }: { books: BooksItemModel[] }) {
 	const navigate = useNavigate();
 
 	return (
