@@ -48,8 +48,8 @@ importers:
         specifier: ^16.5.0
         version: 16.5.0
       drizzle-orm:
-        specifier: ^0.40.1
-        version: 0.40.1(@libsql/client@0.15.0)(@types/pg@8.11.11)(gel@2.0.2)(kysely@0.27.6)(pg@8.14.1)
+        specifier: ^0.41.0
+        version: 0.41.0(@libsql/client@0.15.0)(@types/pg@8.11.11)(gel@2.0.2)(kysely@0.27.6)(pg@8.14.1)
       isbot:
         specifier: ^5.1.26
         version: 5.1.26
@@ -2055,8 +2055,8 @@ packages:
     resolution: {integrity: sha512-U4wWit0fyZuGuP7iNmRleQyK2V8wCuv57vf5l3MnG4z4fzNTjY/U13M8owyQ5RavqvqxBifWORaR3wIUzlN64g==}
     hasBin: true
 
-  drizzle-orm@0.40.1:
-    resolution: {integrity: sha512-aPNhtiJiPfm3qxz1czrnIDkfvkSdKGXYeZkpG55NPTVI186LmK2fBLMi4dsHpPHlJrZeQ92D322YFPHADBALew==}
+  drizzle-orm@0.41.0:
+    resolution: {integrity: sha512-7A4ZxhHk9gdlXmTdPj/lREtP+3u8KvZ4yEN6MYVxBzZGex5Wtdc+CWSbu7btgF6TB0N+MNPrvW7RKBbxJchs/Q==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
       '@cloudflare/workers-types': '>=4'
@@ -5487,7 +5487,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.40.1(@libsql/client@0.15.0)(@types/pg@8.11.11)(gel@2.0.2)(kysely@0.27.6)(pg@8.14.1):
+  drizzle-orm@0.41.0(@libsql/client@0.15.0)(@types/pg@8.11.11)(gel@2.0.2)(kysely@0.27.6)(pg@8.14.1):
     optionalDependencies:
       '@libsql/client': 0.15.0
       '@types/pg': 8.11.11
