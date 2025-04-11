@@ -15,6 +15,13 @@
       "when": 1742631448327,
       "tag": "0001_breezy_avengers",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1743427182037,
+      "tag": "0002_familiar_shatterstar",
+      "breakpoints": true
     }
   ]
 }
