@@ -5,6 +5,87 @@ alwaysApply: true
 ---
 # Programming Knowledge
 
+## Basic Form Setup
+
+Using React Router, Zod, and Conform for form handling.
+
+```ts
+import {
+	getFormProps,
+	getInputProps,
+	useForm,
+} from "@conform-to/react";
+import { parseWithZod } from "@conform-to/zod";
+import { z } from "zod";
+
+// Define schema
+const schema = z.object({
+  email: z.string().email("Invalid email address"),
+});
+
+// Server-side action
+export async function action(ctx: ServerContext, request: Request) {
+  const formData = await request.formData();
+  const submission = parseWithZod(formData, { schema });
+
+  if (submission.status !== "success") {
+    return submission.reply();
+  }
+
+  // Process form data
+  const { email } = submission.value;
+  
+  // Return response
+  return submission.reply({
+    formErrors: ["Error message"],
+  });
+}
+
+// Client-side form
+function MyForm() {
+  const lastResult = useActionData();
+  const [form, fields] = useForm({
+    lastResult,
+    onValidate({ formData }) {
+      return parseWithZod(formData, { schema });
+    },
+    shouldRevalidate: "onBlur",
+  });
+
+  return (
+    <form {...getFormProps(form)}>
+      <input {...getInputProps(fields.email, { type: "email" })} />
+      {fields.email.errors && (
+        <div className="text-red-500 text-sm mt-1">
+          {fields.email.errors}
+        </div>
+      )}
+    </form>
+  );
+}
+```
+
+### Key Points
+1. Form Validation
+   - Use `parseWithZod` instead of `parse`
+   - Schema validation happens both client and server side
+   - Access field errors via `fields.fieldName.errors` (not `error`)
+
+2. Form State
+   - Form submission state is accessed via `useActionData`
+   - Navigation state via `useNavigation`
+   - Form props are accessed via `fields.fieldName.props`
+
+3. Error Handling
+   - Server-side: Use `submission.reply()` to return validation errors
+   - Client-side: Access field errors via `fields.fieldName.errors`
+   - Form-level errors via `form.errors`
+
+4. Best Practices
+   - Use `shouldRevalidate: "onBlur"` for better UX
+   - Handle both success and error states in the action
+   - Use `submission.status` to check validation result
+
 ## Debugging
 
 When a test fails, first check if there are any discrepancies between the code being tested and the test code's expectations.
