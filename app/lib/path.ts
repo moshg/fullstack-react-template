@@ -5,7 +5,10 @@ export type Path =
 	| `/books/${string}`
 	| "/categories"
 	| "/categories/new"
-	| `/categories/${string}`;
+	| `/categories/${string}`
+	| "/signin"
+	| "/signup"
+	| "/verify-otp";
 
 /**
  * Type-safe path helper function.

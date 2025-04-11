@@ -51,12 +51,6 @@ Copy the `.env.example` file to `.env` and set the environment variables:
 cp .env.example .env
 ```
 
-Create a database:
-
-```bash
-pnpm db:migrate
-```
-
 ### Development
 
 Start the database:
@@ -72,6 +66,14 @@ pnpm dev
 ```
 
 Your application will be available at `http://localhost:5173`.
+
+Two authentication methods are implemented: Email OTP (One Time Password) and SSO.
+
+For Email OTP sign-in, the OTP is output as a server log.
+For SSO, Keycloak is used as an IdP that can be run locally. The following user is created in Keycloak by default:
+
+- username: test-user
+- password: password
 
 ## Building for Production
 

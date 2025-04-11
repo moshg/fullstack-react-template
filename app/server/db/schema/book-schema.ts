@@ -1,7 +1,9 @@
 import { relations } from "drizzle-orm";
-import { integer, pgTable, text } from "drizzle-orm/pg-core";
+import { integer, pgSchema, text } from "drizzle-orm/pg-core";
 
-export const categories = pgTable("categories", {
+export const appSchema = pgSchema("app");
+
+export const categories = appSchema.table("categories", {
 	id: integer().primaryKey().generatedByDefaultAsIdentity(),
 	name: text().notNull().unique(),
 	description: text(),
@@ -11,7 +13,7 @@ export const categoriesRelations = relations(categories, ({ many }) => ({
 	bookCategories: many(booksToCategories),
 }));
 
-export const books = pgTable("books", {
+export const books = appSchema.table("books", {
 	id: integer().primaryKey().generatedByDefaultAsIdentity(),
 	title: text().notNull(),
 	author: text().notNull(),
@@ -23,7 +25,7 @@ export const booksRelations = relations(books, ({ many }) => ({
 }));
 
 // Intermediate table for many-to-many relationship between books and categories
-export const booksToCategories = pgTable("books_to_categories", {
+export const booksToCategories = appSchema.table("books_to_categories", {
 	bookId: integer()
 		.notNull()
 		.references(() => books.id),
