@@ -44,6 +44,7 @@ export function getServerContext(request: Request): ServerContext {
 
 	return {
 		db: appDb,
+		auth,
 		logger,
 	};
 }

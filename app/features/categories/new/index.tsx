@@ -9,6 +9,7 @@ import { Link, redirect, useActionData } from "react-router";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { RequiredBadge } from "~/components/ui/required-badge";
+import { p } from "~/lib/path";
 import type { ServerContext } from "~/server/context";
 import { addCategory, categoryAddModelSchema } from "./server/add-category";
 
@@ -36,7 +37,7 @@ export async function newCategoryAction(ctx: ServerContext, request: Request) {
 		}
 
 		// Redirect to categories list page
-		return redirect("/categories");
+		return redirect(p("/categories"));
 	} catch (error) {
 		ctx.logger.error("Failed to add category:", error);
 		throw new Error("Failed to add category", { cause: error });
