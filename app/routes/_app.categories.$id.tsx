@@ -1,8 +1,8 @@
 import { getServerContext } from "~/config/context";
 import {
-	CategoryDetail,
-	categoryDetailLoader,
-} from "~/features/categories/detail";
+	CategoryDetails,
+	categoryDetailsLoader,
+} from "~/features/categories/details";
 import type { Route } from "./+types/_app.categories.$id";
 
 export function meta() {
@@ -14,9 +14,9 @@ export function meta() {
 
 export async function loader({ request, params }: Route.LoaderArgs) {
 	const ctx = getServerContext(request);
-	return categoryDetailLoader(ctx, params.id);
+	return categoryDetailsLoader(ctx, params.id);
 }
 
 export default function Component({ loaderData }: Route.ComponentProps) {
-	return <CategoryDetail category={loaderData.category} />;
+	return <CategoryDetails category={loaderData.category} />;
 }

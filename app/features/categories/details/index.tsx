@@ -12,27 +12,33 @@ type CategoryDetailModel = {
 	description: string | null;
 };
 
-export async function categoryDetailLoader(ctx: ServerContext, id: string) {
-	const { db } = ctx;
+export async function categoryDetailsLoader(ctx: ServerContext, id: string) {
 	const categoryId = Number.parseInt(id, 10);
 
 	if (Number.isNaN(categoryId)) {
 		return { category: null };
 	}
 
-	const category = await db.query.categories.findFirst({
-		where: eq(categories.id, categoryId),
+	const category = await getCategoryDetails(ctx, categoryId);
+	return { category };
+}
+
+async function getCategoryDetails(
+	ctx: ServerContext,
+	id: number,
+): Promise<CategoryDetailModel | null> {
+	const category = await ctx.db.query.categories.findFirst({
+		where: eq(categories.id, id),
 		columns: {
 			id: true,
 			name: true,
 			description: true,
 		},
 	});
-
-	return { category: category ?? null };
+	return category ?? null;
 }
 
-export function CategoryDetail({
+export function CategoryDetails({
 	category,
 }: { category: CategoryDetailModel | null }) {
 	return (

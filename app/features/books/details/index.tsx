@@ -7,7 +7,7 @@ import { p } from "~/lib/path";
 import type { ServerContext } from "~/server/context";
 import { books } from "~/server/db/schema";
 
-export type BookDetailModel = {
+export type BookDetailsModel = {
 	id: number;
 	title: string;
 	author: string;
@@ -15,17 +15,17 @@ export type BookDetailModel = {
 	categories: { id: number; name: string }[];
 };
 
-export async function bookLoader(
+export async function bookDetailsLoader(
 	ctx: ServerContext,
 	id: string,
-): Promise<{ book: BookDetailModel | null }> {
+): Promise<{ book: BookDetailsModel | null }> {
 	const bookId = Number.parseInt(id, 10);
 	if (Number.isNaN(bookId)) {
 		return { book: null };
 	}
 
 	try {
-		const book = await getBook(ctx, bookId);
+		const book = await getBookDetails(ctx, bookId);
 		return { book };
 	} catch (error) {
 		ctx.logger.error("Failed to fetch book:", error);
@@ -33,10 +33,10 @@ export async function bookLoader(
 	}
 }
 
-export async function getBook(
+export async function getBookDetails(
 	ctx: ServerContext,
 	bookId: number,
-): Promise<BookDetailModel | null> {
+): Promise<BookDetailsModel | null> {
 	const { db } = ctx;
 
 	const bookWithCategories = await db.query.books.findFirst({
@@ -77,7 +77,7 @@ export async function getBook(
 	};
 }
 
-export function BookDetail({ book }: { book: BookDetailModel | null }) {
+export function BookDetails({ book }: { book: BookDetailsModel | null }) {
 	return (
 		<div className="container mx-auto py-8">
 			<div className="flex justify-between items-center mb-6">

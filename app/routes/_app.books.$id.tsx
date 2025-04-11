@@ -1,5 +1,5 @@
 import { getServerContext } from "~/config/context";
-import { BookDetail, bookDetailsLoader } from "~/features/books/detail";
+import { BookDetails, bookDetailsLoader } from "~/features/books/details";
 import type { Route } from "./+types/_app.books.$id";
 
 export function meta() {
@@ -16,5 +16,5 @@ export async function loader({ request, params }: Route.LoaderArgs) {
 
 export default function Component({ loaderData }: Route.ComponentProps) {
 	const { book } = loaderData;
-	return <BookDetail book={book} />;
+	return <BookDetails book={book} />;
 }
