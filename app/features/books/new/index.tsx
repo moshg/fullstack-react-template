@@ -1,12 +1,12 @@
-import { getFormProps, getInputProps, useForm } from "@conform-to/react";
+import {
+	type SubmissionResult,
+	getFormProps,
+	getInputProps,
+	useForm,
+} from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { RefreshCw } from "lucide-react";
-import {
-	type FetcherWithComponents,
-	Link,
-	redirect,
-	useActionData,
-} from "react-router";
+import { type FetcherWithComponents, Link, redirect } from "react-router";
 import { z } from "zod";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
@@ -82,13 +82,14 @@ export async function newBookAction(ctx: ServerContext, request: Request) {
 export function NewBook({
 	categories,
 	categoriesFetcher,
+	lastResult,
 }: {
 	categories: CategoryModel[];
 	categoriesFetcher: FetcherWithComponents<{
 		categories: CategoryModel[];
 	}>;
+	lastResult: SubmissionResult<string[]> | undefined;
 }) {
-	const lastResult = useActionData();
 	const [form, fields] = useForm({
 		lastResult,
 		onValidate({ formData }) {

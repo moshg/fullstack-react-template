@@ -22,12 +22,16 @@ export async function action({ request }: Route.ActionArgs) {
 	return newBookAction(ctx, request);
 }
 
-export default function Component({ loaderData }: Route.ComponentProps) {
+export default function Component({
+	loaderData,
+	actionData,
+}: Route.ComponentProps) {
 	const categoriesFetcher = useFetcher<typeof loader>();
 	return (
 		<NewBook
 			categories={loaderData.categories}
 			categoriesFetcher={categoriesFetcher}
+			lastResult={actionData}
 		/>
 	);
 }

@@ -1,11 +1,12 @@
 import {
+	type SubmissionResult,
 	getFormProps,
 	getInputProps,
 	getTextareaProps,
 	useForm,
 } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
-import { Link, redirect, useActionData } from "react-router";
+import { Link, redirect } from "react-router";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { RequiredBadge } from "~/components/ui/required-badge";
@@ -44,8 +45,9 @@ export async function newCategoryAction(ctx: ServerContext, request: Request) {
 	}
 }
 
-export function NewCategory() {
-	const lastResult = useActionData();
+export function NewCategory({
+	lastResult,
+}: { lastResult: SubmissionResult<string[]> | undefined }) {
 	const [form, fields] = useForm({
 		lastResult,
 		onValidate({ formData }) {

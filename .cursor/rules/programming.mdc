@@ -11,6 +11,7 @@ Using React Router, Zod, and Conform for form handling.
 
 ```ts
 import {
+  type SubmissionResult,
 	getFormProps,
 	getInputProps,
 	useForm,
@@ -42,8 +43,7 @@ export async function action(ctx: ServerContext, request: Request) {
 }
 
 // Client-side form
-function MyForm() {
-  const lastResult = useActionData();
+function MyForm({ lastResult }: { lastResult: SubmissionResult<string[]> | undefined; }) {
   const [form, fields] = useForm({
     lastResult,
     onValidate({ formData }) {
@@ -72,7 +72,6 @@ function MyForm() {
    - Access field errors via `fields.fieldName.errors` (not `error`)
 
 2. Form State
-   - Form submission state is accessed via `useActionData`
    - Navigation state via `useNavigation`
    - Form props are accessed via `fields.fieldName.props`
 

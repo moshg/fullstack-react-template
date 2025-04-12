@@ -18,6 +18,6 @@ export async function action({ request }: Route.ActionArgs) {
 	return newCategoryAction(ctx, request);
 }
 
-export default function Component() {
-	return <NewCategory />;
+export default function Component({ actionData }: Route.ComponentProps) {
+	return <NewCategory lastResult={actionData} />;
 }
