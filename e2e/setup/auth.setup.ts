@@ -10,38 +10,18 @@ setup("authenticate", async ({ page }) => {
 	// Navigate to the application's sign-in page
 	await page.goto("/signin");
 
-	// Sign in with SSO
-	await page.getByRole("button", { name: "Continue with SSO" }).click();
-	await page.waitForURL((url) =>
-		url.pathname.startsWith(
-			"/realms/identity-provider/protocol/openid-connect/auth",
-		),
-	);
+	// Sign in with Email OTP
+	await page.getByRole("textbox", { name: "Email" }).fill("test@example.com");
+	await page.getByRole("button", { name: "Continue with email" }).click();
 
-	// Authenticate on the Keycloak login page
-	await page.getByRole("textbox", { name: "username" }).fill("test-user");
-	await page.getByRole("textbox", { name: "password" }).fill("password");
-	await page.getByRole("button", { name: "Sign In" }).click();
+	// Enter OTP code
+	await page.waitForSelector("text=Verify Email");
+	// Input the value specified in MOCK_EMAIL_OTP in playwright.config.ts
+	await page.getByRole("textbox").fill("123456");
+	await page.getByRole("button", { name: "Verify" }).click();
 
-	// Wait for redirect to either the consent screen or homepage
-	await page.waitForURL(
-		(url) =>
-			url.pathname === "/" ||
-			url.pathname.startsWith(
-				"/realms/identity-provider/login-actions/required-action",
-			),
-	);
-
-	// If consent screen is shown
-	if (
-		page
-			.url()
-			.startsWith("/realms/identity-provider/login-actions/required-action")
-	) {
-		await page.getByRole("button", { name: "Yes" }).click();
-		// Wait for redirect to homepage
-		await page.waitForURL("/");
-	}
+	// Wait for redirect to homepage
+	await page.waitForURL("/");
 
 	// Save authentication state
 	await page.context().storageState({ path: authFile });

@@ -26,6 +26,9 @@ const authDb = getAuthDb({
 });
 
 export const auth = getAuth(authDb, {
+	emailOTP: {
+		mockEmailOTP: env.MOCK_EMAIL_OTP,
+	},
 	keycloak: {
 		clientId: env.KEYCLOAK_CLIENT_ID,
 		clientSecret: env.KEYCLOAK_CLIENT_SECRET,
