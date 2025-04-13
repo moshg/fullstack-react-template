@@ -1,6 +1,6 @@
 import { getServerContext } from "~/config/context";
-import { CategoryList, categoryListLoader } from "~/features/categories/index";
-import type { Route } from "./+types/_app.categories._index";
+import { CategoryList, categoryListLoader } from "~/features/categories/list";
+import type { Route } from "./+types/_app.categories._list";
 
 export function meta() {
 	return [
