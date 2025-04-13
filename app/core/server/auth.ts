@@ -32,8 +32,11 @@ export function getAuth(db: AuthDatabase, authConfig: AuthConfig) {
 						`Sending verification OTP\nemail: ${email}\ntype: ${type}\nOTP: ${otp}`,
 					);
 				},
-				generateOTP:
-					mockEmailOTP !== undefined ? () => mockEmailOTP : undefined,
+				// Skip the generateOTP key if mockEmailOTP is undefined
+				// to avoid errors when generateOTP is undefined
+				...(mockEmailOTP && {
+					generateOTP: () => mockEmailOTP,
+				}),
 			}),
 			// https://www.better-auth.com/docs/plugins/generic-oauth
 			genericOAuth({
