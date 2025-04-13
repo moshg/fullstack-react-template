@@ -6,6 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const authFile = path.join(__dirname, "../../playwright/.cache/auth/user.json");
 
+// https://playwright.dev/docs/auth
 setup("authenticate", async ({ page }) => {
 	// Navigate to the application's sign-in page
 	await page.goto("/signin");
