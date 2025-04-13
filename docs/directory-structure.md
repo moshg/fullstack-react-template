@@ -13,9 +13,12 @@
 - `components/`: Reusable UI components
 - `config/`: Application configuration files. Can only be accessed from routes
 - `features/`: Feature-specific code organized by domain (detailed in the [Features Directory section](#features-directory) below)
-- `lib/`: Utility functions and shared code
+- `core/`: Core business logic and infrastructure code
+  - `shared/`: Domain models and business rules shared across client and server
+  - `client/`: Client-side API clients
+  - `server/`: Server-side infrastructure implementations
 - `routes/`: Application routing logic
-- `server/`: Server infrastructure code including database and logger implementations
+- `utils/`: General utility functions
 - `root.tsx`: Root component and application entry point
 - `routes.ts`: Route definitions. Only specifies file-based routing configuration
 - `app.css`: Global styles
@@ -23,16 +26,12 @@
 ### Features Directory
 
 - `<feature>/`: Feature-specific code
-  - `shared/`: Business logic that is not specific to a usecase. Can be accessed from other `features/` directories
-    - `models/`: Define types and functions representing business logic
-    - `server/`: Define server-side logic. Database connections and other resources are received as a `ServerContext` type parameter
   - `<usecase>/`: Usecase-specific code. Cannot be accessed from directories other than the corresponding `routes/` directory
     - `components/`: Usecase-specific components
     - `models/`: Usecase-specific types and functions
     - `action.ts`: Route action
     - `component.tsx`: Route component
     - `loader.ts`: Route loader
-## Configuration Files
 
 ## Configuration Files
 
