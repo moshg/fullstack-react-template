@@ -1,8 +1,8 @@
 import { type Result, createErr, createOk } from "option-t/plain_result";
 import pg from "pg";
 import { z } from "zod";
-import type { ServerContext } from "~/server/context";
-import { categories } from "~/server/db/schema";
+import type { ServerContext } from "~/core/server/context";
+import { categories } from "~/core/server/db/schema";
 
 export const categoryAddModelSchema = z
 	.object({

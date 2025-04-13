@@ -10,8 +10,8 @@ import {
 	TableHeader,
 	TableRow,
 } from "~/components/ui/table";
-import { p } from "~/lib/path";
-import type { ServerContext } from "~/server/context";
+import type { ServerContext } from "~/core/server/context";
+import { p } from "~/core/shared/path";
 
 type BooksItemModel = {
 	id: number;

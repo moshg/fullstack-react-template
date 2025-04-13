@@ -10,8 +10,8 @@ import { Link, redirect } from "react-router";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { RequiredBadge } from "~/components/ui/required-badge";
-import { p } from "~/lib/path";
-import type { ServerContext } from "~/server/context";
+import type { ServerContext } from "~/core/server/context";
+import { p } from "~/core/shared/path";
 import { addCategory, categoryAddModelSchema } from "./server/add-category";
 
 export async function newCategoryAction(ctx: ServerContext, request: Request) {

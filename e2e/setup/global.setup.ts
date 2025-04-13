@@ -1,5 +1,5 @@
 import { test as setup } from "@playwright/test";
-import { books, booksToCategories, categories } from "~/server/db/schema";
+import { books, booksToCategories, categories } from "~/core/server/db/schema";
 import { getTestDb } from "./db";
 
 setup("reset database", async () => {

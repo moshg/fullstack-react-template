@@ -1,7 +1,7 @@
 import { Outlet, redirect } from "react-router";
 import { auth } from "~/config/context";
+import { p } from "~/core/shared/path";
 import { AppLayout } from "~/features/layout";
-import { p } from "~/lib/path";
 import type { Route } from "./+types/_app";
 
 export async function loader({ request }: Route.LoaderArgs) {

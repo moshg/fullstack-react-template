@@ -1,5 +1,5 @@
 import { test as teardown } from "@playwright/test";
-import { books, booksToCategories, categories } from "~/server/db/schema";
+import { books, booksToCategories, categories } from "~/core/server/db/schema";
 import { getTestDb } from "./db";
 
 teardown("delete database", async () => {

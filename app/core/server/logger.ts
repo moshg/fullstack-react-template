@@ -3,7 +3,7 @@ import {
 	createLogger as winstonCreateLogger,
 	format as winstonFormat,
 } from "winston";
-import { assertNever } from "~/lib/type";
+import { assertNever } from "~/utils/type";
 
 export function createLogger(args: {
 	format: "pretty" | "json";
