@@ -107,12 +107,7 @@ export default defineConfig({
 			reuseExistingServer: !process.env.CI,
 			timeout: 120 * 1000, // 2-minute timeout
 			env: {
-				DB_HOST: "localhost",
 				DB_PORT: "5433",
-				DB_NAME: "postgres",
-				DB_USER: "app_user",
-				DB_PASSWORD: "app_password",
-				KEYCLOAK_URL: "http://localhost:8081",
 				MOCK_EMAIL_OTP: "123456",
 			},
 		},

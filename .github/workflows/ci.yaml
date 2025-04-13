@@ -50,6 +50,7 @@ jobs:
           POSTGRES_DB: postgres
         ports:
           - 5433:5432
+        # At this point, we are before checkout, so database initialization is done in steps
 
     steps:
       - uses: actions/checkout@v4
@@ -72,11 +73,21 @@ jobs:
       - name: Install Playwright Browsers
         run: pnpm exec playwright install chromium --with-deps --only-shell
 
-      - name: Copy env file
-        run: cp .env.test .env
+      - name: Copy env file and replace DB_PORT
+        run: |
+          cp .env.example .env
+          sed -i 's/DB_PORT=.*/DB_PORT=5433/' .env
 
       - name: Run database migrations
         run: pnpm db:migrate
+        env:
+          ADMIN_DB_USER: postgres
+          ADMIN_DB_PASSWORD: postgres
+
+      - name: Create database users
+        run: psql -h localhost -p 5433 -U postgres -f drizzle/9999_setup-roles.sql
+        env:
+          PGPASSWORD: postgres
 
       - name: Run tests
         run: pnpm e2e
