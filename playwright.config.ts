@@ -26,7 +26,7 @@ export default defineConfig({
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
 	use: {
 		/* Base URL to use in actions like `await page.goto('/')`. */
-		baseURL: "http://localhost:5173",
+		baseURL: "http://localhost:5174",
 
 		/* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
 		trace: "on-first-retry",
@@ -103,10 +103,11 @@ export default defineConfig({
 		},
 		{
 			command: "pnpm dev",
-			url: "http://localhost:5173",
+			url: "http://localhost:5174",
 			reuseExistingServer: !process.env.CI,
 			timeout: 120 * 1000, // 2-minute timeout
 			env: {
+				PORT: "5174",
 				DB_PORT: "5433",
 				MOCK_EMAIL_OTP: "123456",
 			},
