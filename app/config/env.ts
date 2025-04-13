@@ -9,11 +9,11 @@ export const envSchema = z.object({
 	DB_SSL: z
 		.enum(["true", "false"])
 		.transform((val) => val.toLowerCase() === "true"),
-	APP_DB_USER: z.string().min(1),
-	APP_DB_PASSWORD: z.string().min(1),
+	DB_APP_USER: z.string().min(1),
+	DB_APP_PASSWORD: z.string().min(1),
 	// Auth DB User credentials
-	AUTH_DB_USER: z.string().min(1),
-	AUTH_DB_PASSWORD: z.string().min(1),
+	DB_AUTH_USER: z.string().min(1),
+	DB_AUTH_PASSWORD: z.string().min(1),
 	KEYCLOAK_CLIENT_ID: z.string().min(1),
 	KEYCLOAK_CLIENT_SECRET: z.string().min(1),
 	KEYCLOAK_URL: z.string().min(1),

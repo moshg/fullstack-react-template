@@ -81,8 +81,8 @@ jobs:
       - name: Run database migrations
         run: pnpm db:migrate
         env:
-          ADMIN_DB_USER: postgres
-          ADMIN_DB_PASSWORD: postgres
+          DB_ADMIN_USER: postgres
+          DB_ADMIN_PASSWORD: postgres
 
       - name: Create database users
         run: psql -h localhost -p 5433 -U postgres -f drizzle/9999_setup-roles.sql

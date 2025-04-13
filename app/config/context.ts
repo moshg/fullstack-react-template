@@ -10,8 +10,8 @@ const appDb = getDb({
 	host: env.DB_HOST,
 	port: env.DB_PORT,
 	database: env.DB_NAME,
-	user: env.APP_DB_USER,
-	password: env.APP_DB_PASSWORD,
+	user: env.DB_APP_USER,
+	password: env.DB_APP_PASSWORD,
 	ssl: env.DB_SSL,
 });
 
@@ -20,8 +20,8 @@ const authDb = getAuthDb({
 	host: env.DB_HOST,
 	port: env.DB_PORT,
 	database: env.DB_NAME,
-	user: env.AUTH_DB_USER,
-	password: env.AUTH_DB_PASSWORD,
+	user: env.DB_AUTH_USER,
+	password: env.DB_AUTH_PASSWORD,
 	ssl: env.DB_SSL,
 });
 
