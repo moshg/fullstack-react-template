@@ -1,6 +1,6 @@
 import { getServerContext } from "~/config/context";
-import { BookList, bookListLoader } from "~/features/books/index";
-import type { Route } from "./+types/_app.books._index";
+import { BookList, bookListLoader } from "~/features/books/list";
+import type { Route } from "./+types/_app.books._list";
 
 export function meta() {
 	return [
