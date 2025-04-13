@@ -3,7 +3,10 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { emailOTP, genericOAuth } from "better-auth/plugins";
 import type { AuthDatabase } from "./db";
 
-export type OAuthConfig = {
+export type AuthConfig = {
+	emailOTP: {
+		mockEmailOTP: string | undefined;
+	};
 	keycloak: {
 		clientId: string;
 		clientSecret: string;
@@ -12,7 +15,10 @@ export type OAuthConfig = {
 	};
 };
 
-export function getAuth(db: AuthDatabase, oauthConfig: OAuthConfig) {
+export function getAuth(db: AuthDatabase, authConfig: AuthConfig) {
+	const { keycloak } = authConfig;
+	const mockEmailOTP = authConfig.emailOTP.mockEmailOTP;
+
 	return betterAuth({
 		database: drizzleAdapter(db, {
 			provider: "pg",
@@ -26,15 +32,17 @@ export function getAuth(db: AuthDatabase, oauthConfig: OAuthConfig) {
 						`Sending verification OTP\nemail: ${email}\ntype: ${type}\nOTP: ${otp}`,
 					);
 				},
+				generateOTP:
+					mockEmailOTP !== undefined ? () => mockEmailOTP : undefined,
 			}),
 			// https://www.better-auth.com/docs/plugins/generic-oauth
 			genericOAuth({
 				config: [
 					{
 						providerId: "keycloak",
-						clientId: oauthConfig.keycloak.clientId,
-						clientSecret: oauthConfig.keycloak.clientSecret,
-						discoveryUrl: `${oauthConfig.keycloak.url}/realms/${oauthConfig.keycloak.realm}/.well-known/openid-configuration`,
+						clientId: keycloak.clientId,
+						clientSecret: keycloak.clientSecret,
+						discoveryUrl: `${keycloak.url}/realms/${keycloak.realm}/.well-known/openid-configuration`,
 						scopes: ["openid"],
 					},
 				],
