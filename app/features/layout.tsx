@@ -9,9 +9,9 @@ import {
 	NavigationMenuList,
 	navigationMenuTriggerStyle,
 } from "~/components/ui/navigation-menu";
-import { authClient } from "~/lib/auth-client";
-import { p } from "~/lib/path";
-import { cn } from "~/lib/utils";
+import { authClient } from "~/core/client/auth-client";
+import { p } from "~/core/shared/path";
+import { cn } from "~/utils/props";
 
 /**
  * Layout for authenticated users

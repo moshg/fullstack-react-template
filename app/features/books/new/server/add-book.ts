@@ -1,6 +1,6 @@
 import { z } from "zod";
-import type { ServerContext } from "~/server/context";
-import { books, booksToCategories } from "~/server/db/schema";
+import type { ServerContext } from "~/core/server/context";
+import { books, booksToCategories } from "~/core/server/db/schema";
 
 export const bookCreateModelSchema = z
 	.object({

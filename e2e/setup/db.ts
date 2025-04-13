@@ -1,4 +1,4 @@
-import { getDb } from "~/server/db";
+import { getDb } from "~/core/server/db";
 
 export function getTestDb() {
 	return getDb({

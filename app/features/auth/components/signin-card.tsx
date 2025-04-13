@@ -2,8 +2,8 @@ import { z } from "zod";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { RequiredBadge } from "~/components/ui/required-badge";
-import { authClient } from "~/lib/auth-client";
-import { p } from "~/lib/path";
+import { authClient } from "~/core/client/auth-client";
+import { p } from "~/core/shared/path";
 import type { UseLoadingReturn } from "../hooks/use-loading";
 import { useLoading } from "../hooks/use-loading";
 

@@ -8,8 +8,8 @@ import {
 	InputOTPGroup,
 	InputOTPSlot,
 } from "~/components/ui/input-otp";
-import { authClient } from "~/lib/auth-client";
-import { p } from "~/lib/path";
+import { authClient } from "~/core/client/auth-client";
+import { p } from "~/core/shared/path";
 
 const schema = z.object({
 	otp: z.string().length(6, "One-time password must be 6 characters"),

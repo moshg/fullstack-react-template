@@ -13,7 +13,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Checkbox } from "~/components/ui/checkbox";
 import { Label } from "~/components/ui/label";
 import { RequiredBadge } from "~/components/ui/required-badge";
-import type { ServerContext } from "~/server/context";
+import type { ServerContext } from "~/core/server/context";
 import { addBook, bookCreateModelSchema } from "./server/add-book";
 
 type CategoryModel = {

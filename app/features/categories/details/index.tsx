@@ -2,9 +2,9 @@ import { eq } from "drizzle-orm";
 import { Link } from "react-router";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
-import { p } from "~/lib/path";
-import type { ServerContext } from "~/server/context";
-import { categories } from "~/server/db/schema";
+import type { ServerContext } from "~/core/server/context";
+import { categories } from "~/core/server/db/schema";
+import { p } from "~/core/shared/path";
 
 type CategoryDetailModel = {
 	id: number;
