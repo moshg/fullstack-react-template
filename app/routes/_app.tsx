@@ -1,6 +1,7 @@
 import { Outlet, redirect } from "react-router";
 import { auth } from "~/config/context";
 import { p } from "~/core/shared/path";
+import { AppErrorBoundary } from "~/features/error/app-error-boundary";
 import { AppLayout } from "~/features/layout";
 import type { Route } from "./+types/_app";
 
@@ -20,4 +21,7 @@ export default function Component({ loaderData }: Route.ComponentProps) {
 			<Outlet />
 		</AppLayout>
 	);
+}
+export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
+	return <AppErrorBoundary error={error} />;
 }
