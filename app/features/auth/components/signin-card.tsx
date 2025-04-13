@@ -1,6 +1,8 @@
 import { z } from "zod";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+import { Input } from "~/components/ui/input";
+import { Label } from "~/components/ui/label";
 import { RequiredBadge } from "~/components/ui/required-badge";
 import { authClient } from "~/core/client/auth-client";
 import { p } from "~/core/shared/path";
@@ -104,14 +106,13 @@ function EmailSignInForm({
 	return (
 		<form method="post" className="space-y-4" onSubmit={handleSubmit}>
 			<div>
-				<label htmlFor="email" className="block text-sm font-medium mb-1">
+				<Label htmlFor="email" className="mb-1.5">
 					Email <RequiredBadge />
-				</label>
-				<input
+				</Label>
+				<Input
 					type="email"
 					name="email"
 					id="email"
-					className="w-full p-2 border rounded-md"
 					required
 					value={email}
 					onChange={(e) => onEmailChange(e.target.value)}

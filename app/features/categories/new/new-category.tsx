@@ -9,7 +9,10 @@ import { parseWithZod } from "@conform-to/zod";
 import { Link, redirect } from "react-router";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+import { Input } from "~/components/ui/input";
+import { Label } from "~/components/ui/label";
 import { RequiredBadge } from "~/components/ui/required-badge";
+import { Textarea } from "~/components/ui/textarea";
 import type { ServerContext } from "~/core/server/context";
 import { p } from "~/core/shared/path";
 import { addCategory, categoryAddModelSchema } from "./server/add-category";
@@ -79,16 +82,10 @@ export function NewCategory({
 							</div>
 						)}
 						<div>
-							<label
-								htmlFor={fields.name.id}
-								className="block text-sm font-medium mb-1"
-							>
+							<Label htmlFor={fields.name.id} className="mb-1.5">
 								Name <RequiredBadge />
-							</label>
-							<input
-								{...getInputProps(fields.name, { type: "text" })}
-								className="w-full p-2 border rounded-md"
-							/>
+							</Label>
+							<Input {...getInputProps(fields.name, { type: "text" })} />
 							{fields.name.errors && (
 								<div className="text-red-500 text-sm mt-1">
 									{fields.name.errors}
@@ -97,17 +94,10 @@ export function NewCategory({
 						</div>
 
 						<div>
-							<label
-								htmlFor={fields.description.id}
-								className="block text-sm font-medium mb-1"
-							>
+							<Label htmlFor={fields.description.id} className="mb-1.5">
 								Description
-							</label>
-							<textarea
-								{...getTextareaProps(fields.description)}
-								className="w-full p-2 border rounded-md"
-								rows={4}
-							/>
+							</Label>
+							<Textarea {...getTextareaProps(fields.description)} rows={4} />
 							{fields.description.errors && (
 								<div className="text-red-500 text-sm mt-1">
 									{fields.description.errors}

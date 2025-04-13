@@ -11,6 +11,7 @@ import { z } from "zod";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Checkbox } from "~/components/ui/checkbox";
+import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { RequiredBadge } from "~/components/ui/required-badge";
 import type { ServerContext } from "~/core/server/context";
@@ -126,16 +127,10 @@ export function NewBook({
 						)}
 
 						<div>
-							<label
-								htmlFor={fields.title.id}
-								className="block text-sm font-medium mb-1"
-							>
+							<Label htmlFor={fields.title.id} className="mb-1.5">
 								Title <RequiredBadge />
-							</label>
-							<input
-								{...getInputProps(fields.title, { type: "text" })}
-								className="w-full p-2 border rounded-md"
-							/>
+							</Label>
+							<Input {...getInputProps(fields.title, { type: "text" })} />
 							{fields.title.errors && (
 								<div className="text-red-500 text-sm mt-1">
 									{fields.title.errors}
@@ -144,16 +139,10 @@ export function NewBook({
 						</div>
 
 						<div>
-							<label
-								htmlFor={fields.author.id}
-								className="block text-sm font-medium mb-1"
-							>
+							<Label htmlFor={fields.author.id} className="mb-1.5">
 								Author <RequiredBadge />
-							</label>
-							<input
-								{...getInputProps(fields.author, { type: "text" })}
-								className="w-full p-2 border rounded-md"
-							/>
+							</Label>
+							<Input {...getInputProps(fields.author, { type: "text" })} />
 							{fields.author.errors && (
 								<div className="text-red-500 text-sm mt-1">
 									{fields.author.errors}
@@ -162,15 +151,11 @@ export function NewBook({
 						</div>
 
 						<div>
-							<label
-								htmlFor={fields.publishYear.id}
-								className="block text-sm font-medium mb-1"
-							>
+							<Label htmlFor={fields.publishYear.id} className="mb-1.5">
 								Publication Year
-							</label>
-							<input
+							</Label>
+							<Input
 								{...getInputProps(fields.publishYear, { type: "number" })}
-								className="w-full p-2 border rounded-md"
 								min="1000"
 								max={new Date().getFullYear()}
 							/>
